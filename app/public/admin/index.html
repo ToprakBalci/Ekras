@@ -9,7 +9,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f9; display: flex; flex-direction: column; height: 100vh; }
         
-        /* TOP BAR */
         .top-bar {
             background-color: #ffffff;
             height: 60px;
@@ -34,10 +33,8 @@
         .btn-green { background-color: #2563eb; }
         .btn-green:hover { background-color: #1d4ed8; }
 
-        /* MAIN CONTAINER */
         .main-container { display: flex; flex: 1; }
 
-        /* SIDEBAR */
         .sidebar {
             width: 220px;
             background-color: #ffffff;
@@ -61,7 +58,6 @@
         }
         .menu-item i { width: 18px; font-size: 15px; }
 
-        /* CONTENT AREA */
         .content { flex: 1; padding: 25px; }
         .alert-success {
             background-color: #eff6ff;
@@ -98,31 +94,26 @@
 </head>
 <body>
 
-    <!-- TOP BAR -->
     <div class="top-bar">
         <div class="brand">
             <i class="fas fa-building" style="color: #2563eb;"></i> EKRAS Panel
         </div>
         <div class="top-buttons">
-            <a href="../index.html" target="_blank" class="btn-top btn-green"><i class="fas fa-globe"></i> Sitemi Göster</a>
+            <a href="/" target="_blank" class="btn-top btn-green"><i class="fas fa-globe"></i> Sitemi Göster</a>
         </div>
     </div>
 
-    <!-- MAIN CONTAINER -->
     <div class="main-container">
-        
-        <!-- SIDEBAR -->
         <div class="sidebar">
-            <a href="index.html" class="menu-item active"><i class="fas fa-home"></i> Anasayfa</a>
-            <a href="slider-yonetimi.html" class="menu-item"><i class="fas fa-images"></i> Slider Yönetimi</a>
-            <a href="projeler.html" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
-            <a href="hizmetler.html" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
-            <a href="sayfalar.html" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
-            <a href="ayarlar.html" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
-            <a href="login.html" class="menu-item" style="color: #dc2626; margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+            <a href="/admin/index.html" class="menu-item active"><i class="fas fa-home"></i> Anasayfa</a>
+            <a href="/admin/slider-yonetimi.html" class="menu-item"><i class="fas fa-images"></i> Slider Yönetimi</a>
+            <a href="#" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
+            <a href="#" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
+            <a href="#" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
+            <a href="#" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
+            <a href="#" class="menu-item" style="color: #dc2626; margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
         </div>
 
-        <!-- CONTENT -->
         <div class="content">
             <div class="alert-success">
                 💡 <strong>Giriş Başarılı!</strong> Ekras Yönetim Paneline hoş geldiniz. Sol menüden işlem seçebilirsiniz.
@@ -132,21 +123,20 @@
             <p style="color: #6b7280; font-size: 14px;">Web sitenizin içeriklerini ve görsellerini buradan anlık olarak güncelleyebilirsiniz.</p>
 
             <div class="dashboard-cards">
-                <a href="slider-yonetimi.html" class="card">
+                <a href="/admin/slider-yonetimi.html" class="card">
                     <h3>SLİDER VE BANNER GÖRSELLERİ</h3>
                     <p style="color: #2563eb; font-weight: bold; margin-top: 10px;">Ana sayfa görsellerini yönetin</p>
                 </a>
-                <a href="projeler.html" class="card">
+                <a href="#" class="card">
                     <h3>TAMAMLANAN VE DEVAM EDEN PROJELER</h3>
                     <p style="color: #2563eb; font-weight: bold; margin-top: 10px;">Proje portföyünü düzenleyin</p>
                 </a>
-                <a href="ayarlar.html" class="card">
+                <a href="#" class="card">
                     <h3>İLETİŞİM VE ADRES BİLGİLERİ</h3>
                     <p style="color: #2563eb; font-weight: bold; margin-top: 10px;">Firma bilgilerini güncelleyin</p>
                 </a>
             </div>
         </div>
-
     </div>
 
 </body>
