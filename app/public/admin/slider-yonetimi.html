@@ -82,12 +82,21 @@
                 <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Yeni Görsel Ekle</h3>
                 <div class="form-row">
                     <select id="categoryInput" class="input-text">
-                        <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
-                        <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
-                        <option value="Tamamlanan Projeler">📍 Tamamlanan Projeler</option>
-                        <option value="Devam Eden Projeler">📍 Devam Eden Projeler</option>
-                        <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
-                    </select>
+    <optgroup label="Genel Sayfa Alanları">
+        <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
+        <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
+        <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
+    </optgroup>
+    <optgroup label="Projelerimiz">
+        <option value="Proje 1">🏢 Proje 1</option>
+        <option value="Proje 2">🏡 Proje 2</option>
+        <option value="Proje 3">🏗️ Proje 3</option>
+        <option value="Proje 4">🏬 Proje 4</option>
+        <option value="Proje 5">🌆 Proje 5</option>
+        <option value="Proje 6">🏞️ Proje 6</option>
+        <option value="Proje 7">🏖️ Proje 7</option>
+    </optgroup>
+</select>
                     <input type="file" id="fileInput" class="input-text" accept="image/*">
                     <input type="text" id="titleInput" class="input-text" placeholder="Görsel Adı / Başlığı">
                     <button class="btn-add" id="btnUpload" onclick="sliderEkle()"><i class="fas fa-plus"></i> Sitemize Ekle</button>
