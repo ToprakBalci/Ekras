@@ -74,14 +74,13 @@
 
         <div class="content">
             <div class="alert-info">
-                💡 Yukarıdaki açılır menüden hangi alanı seçerseniz, aşağıda anında sadece o alana ait görseller listelenir. Aynı zamanda yeni ekleyeceğiniz görseller de seçili olan bu alana kaydedilir.
+                💡 Yukarıdaki menüden hangi projeyi veya alanı seçerseniz, aşağıda o alana ait görseller listelenir. Yeni eklediğiniz görseller doğrudan seçili olan kategoriye kaydedilir.
             </div>
 
             <!-- TEK KONTROL MENÜSÜ & EKLEME ALANI -->
             <div class="add-box">
                 <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Görsel Alanı Seçimi & Yeni Görsel Ekle</h3>
                 <div class="form-row">
-                    <!-- onchange="renderSliders()" sayesinde menü değiştirildiği an aşağısı filtrelenir -->
                     <select id="categoryInput" class="input-text" onchange="renderSliders()">
                         <optgroup label="Genel Sayfa Alanları">
                             <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
@@ -163,13 +162,21 @@
     </div>
 
     <script>
-        let sliders = JSON.parse(localStorage.getItem('ekras_sliders')) || [
+        // Tarayıcı belleğinde veri varsa onu al, yoksa her kategori için eksiksiz örnekler oluştur
+        let savedSliders = JSON.parse(localStorage.getItem('ekras_sliders'));
+        let sliders = savedSliders && savedSliders.length > 0 ? savedSliders : [
             { id: 1, title: 'Anasayfa Banner 1', category: 'Anasayfa Slider', image_url: '../images/hero-1.jpg', is_active: true },
             { id: 2, title: 'Anasayfa Banner 2', category: 'Anasayfa Slider', image_url: '../images/hero-2.jpg', is_active: true },
-            { id: 3, title: 'Anasayfa Banner 3', category: 'Anasayfa Slider', image_url: '../images/hero-3.jpg', is_active: true },
-            { id: 4, title: 'Hakkımızda Kapak', category: 'Hakkımızda Sayfası', image_url: '../images/about.jpg', is_active: true },
-            { id: 5, title: 'Vela Sapanca Görseli', category: 'Vela Sapanca', image_url: '../images/vela-sapanca.jpg', is_active: true },
-            { id: 6, title: 'Ereğli Konakları Görseli', category: 'Ekşioğlu Konakları (Ereğli)', image_url: '../images/eksioglu-eregli.jpg', is_active: true }
+            { id: 3, title: 'Hakkımızda Kapak Görseli', category: 'Hakkımızda Sayfası', image_url: '../images/about.jpg', is_active: true },
+            { id: 4, title: 'Hizmetlerimiz Ana Görsel', category: 'Hizmetlerimiz', image_url: '../images/hizmetler.jpg', is_active: true },
+            { id: 5, title: 'Vela Sapanca Manzara', category: 'Vela Sapanca', image_url: '../images/vela-sapanca.jpg', is_active: true },
+            { id: 6, title: 'Ereğli Konakları Dış Cephe', category: 'Ekşioğlu Konakları (Ereğli)', image_url: '../images/eksioglu-eregli.jpg', is_active: true },
+            { id: 7, title: '4. Etap Genel Görünüm', category: 'Ekşioğlu Konakları 4. Etap', image_url: '../images/etap4.jpg', is_active: true },
+            { id: 8, title: '3. Etap Bloklar', category: 'Ekşioğlu Konakları 3. Etap', image_url: '../images/etap3.jpg', is_active: true },
+            { id: 9, title: '2. Etap Peyzaj', category: 'Ekşioğlu Konakları 2. Etap', image_url: '../images/etap2.jpg', is_active: true },
+            { id: 10, title: '1. Etap Yaşam Alanı', category: 'Ekşioğlu Konakları 1. Etap', image_url: '../images/etap1.jpg', is_active: true },
+            { id: 11, title: 'Life City Proje Görseli', category: 'Ekşioğlu Life City', image_url: '../images/lifecity.jpg', is_active: true },
+            { id: 12, title: 'Evler Genel Görsel', category: 'Ekşioğlu Evleri', image_url: '../images/evler.jpg', is_active: true }
         ];
 
         function renderSliders() {
@@ -180,7 +187,7 @@
             activeContainer.innerHTML = '';
             passiveContainer.innerHTML = '';
 
-            // Seçilen kategoriye göre filtreleme yapıyoruz
+            // Seçilen kategoriye ait olan tüm görselleri süzüyoruz
             const filteredSliders = sliders.filter(item => item.category === selectedCategory);
 
             const activeItems = filteredSliders.filter(item => item.is_active);
