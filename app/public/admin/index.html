@@ -138,6 +138,27 @@
             </div>
         </div>
     </div>
+                    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const SUPABASE_URL = "BURAYA_PROJECT_URL_YAPIŞTIR";
+    const SUPABASE_KEY = "BURAYA_ANON_KEY_YAPIŞTIR";
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    async function loadMainSliders() {
+        // Veritabanından sadece AKTİF olan resimleri çek
+        const { data, error } = await db.from('sliders').select('*').eq('is_active', true);
+        
+        if (data && data.length > 0) {
+            console.log("Sitede gösterilecek aktif görseller:", data);
+            
+            // Eğer slider container ID'n varsa içine resimleri basabilirsin
+            // Örnek:
+            // const container = document.getElementById('slider-container');
+            // container.innerHTML = data.map(item => `<img src="${item.image_url}" alt="${item.title}">`).join('');
+        }
+    }
+
+    loadMainSliders();
+</script>
 </body>
 </html>
