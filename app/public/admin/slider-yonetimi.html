@@ -81,7 +81,7 @@
                 <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Yeni Görsel Ekle</h3>
                 <div class="form-row">
                     <select id="categoryInput" class="input-text">
-                        <!-- Javascript ile dolacak -->
+                        <!-- Javascript dolduruyor -->
                     </select>
                     <input type="file" id="fileInput" class="input-text" accept="image/*">
                     <input type="text" id="titleInput" class="input-text" placeholder="Görsel Adı / Başlığı">
@@ -121,7 +121,7 @@
                 
                 <label style="font-size: 13px; font-weight: bold;">Görsel Nereye Ait?</label>
                 <select id="editCategory" class="input-text">
-                    <!-- Javascript ile dolacak -->
+                    <!-- Javascript dolduruyor -->
                 </select>
 
                 <label style="font-size: 13px; font-weight: bold;">Görsel Başlığı:</label>
@@ -143,7 +143,17 @@
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhdXJzcXNkaXBtbnRraGZ3bG9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTQ0MTAsImV4cCI6MjEwMDM5MDQxMH0.bVxwSJ-6Kn7zQnu1KXG5MTDoJocCFlrZNXQAT71VB2U";
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // 1. Kategorileri ve Projelerini Doğrudan Menüye Yazdır
+        // Proje klasöründeki mevcut görseller
+        const defaultImages = [
+            { id: 101, title: 'Anasayfa Banner 1', category: 'Anasayfa Slider', image_url: '../images/hero-1.jpg', is_active: true },
+            { id: 102, title: 'Anasayfa Banner 2', category: 'Anasayfa Slider', image_url: '../images/hero-2.jpg', is_active: true },
+            { id: 103, title: 'Anasayfa Banner 3', category: 'Anasayfa Slider', image_url: '../images/hero-3.jpg', is_active: true },
+            { id: 104, title: 'Hakkımızda Kapak Görseli', category: 'Hakkımızda Sayfası', image_url: '../images/about.jpg', is_active: true },
+            { id: 105, title: 'Vela Sapanca Ana Resim', category: 'Vela Sapanca', image_url: '../images/vela-sapanca.jpg', is_active: true },
+            { id: 106, title: 'Ekşioğlu Ereğli Resim', category: 'Ekşioğlu Konakları (Ereğli)', image_url: '../images/eksioglu-eregli.jpg', is_active: true }
+        ];
+
+        // 1. Kategorileri Menüye Doldur
         function loadCategories() {
             const catSelect = document.getElementById('categoryInput');
             const editCatSelect = document.getElementById('editCategory');
@@ -157,6 +167,12 @@
                 <optgroup label="Projelerimiz">
                     <option value="Vela Sapanca">🏢 Vela Sapanca</option>
                     <option value="Ekşioğlu Konakları (Ereğli)">🏢 Ekşioğlu Konakları (Ereğli)</option>
+                    <option value="Ekşioğlu Konakları 4. Etap">🏢 Ekşioğlu Konakları 4. Etap</option>
+                    <option value="Ekşioğlu Konakları 3. Etap">🏢 Ekşioğlu Konakları 3. Etap</option>
+                    <option value="Ekşioğlu Konakları 2. Etap">🏢 Ekşioğlu Konakları 2. Etap</option>
+                    <option value="Ekşioğlu Konakları 1. Etap">🏢 Ekşioğlu Konakları 1. Etap</option>
+                    <option value="Ekşioğlu Life City">🏢 Ekşioğlu Life City</option>
+                    <option value="Ekşioğlu Evleri">🏢 Ekşioğlu Evleri</option>
                 </optgroup>
             `;
 
@@ -164,24 +180,25 @@
             editCatSelect.innerHTML = optionsHTML;
         }
 
-        // 2. Görselleri Veritabanından Yükle
-        async function loadSliders() {
-            const { data, error } = await db.from('sliders').select('*').order('created_at', { ascending: false });
-            
-            if (error) return console.error(error);
-
+        // 2. Görselleri Ekrana Çiz
+        function renderSliders(sliders) {
             const activeContainer = document.getElementById('activeSliders');
             const passiveContainer = document.getElementById('passiveSliders');
             
             activeContainer.innerHTML = '';
             passiveContainer.innerHTML = '';
 
-            data.forEach(item => {
+            if(!sliders || sliders.length === 0) {
+                activeContainer.innerHTML = '<p style="color:#64748b; font-size:13px;">Görsel bulunamadı.</p>';
+                return;
+            }
+
+            sliders.forEach(item => {
                 const categoryName = item.category || 'Anasayfa Slider';
                 const cardHTML = `
                     <div class="image-card ${item.is_active ? '' : 'passive'}">
                         <div class="card-info">
-                            <img src="${item.image_url}" class="img-preview" alt="Görsel">
+                            <img src="${item.image_url}" class="img-preview" alt="Görsel" onerror="this.src='https://via.placeholder.com/90x55?text=Resim+Yok'">
                             <div>
                                 <div style="font-size:14px; font-weight:600;">${item.title || 'Başlıksız'}</div>
                                 <span class="location-badge">📍 ${categoryName}</span>
@@ -205,7 +222,23 @@
             });
         }
 
-        // 3. Yeni Görsel Ekle
+        // 3. Veritabanından (veya Varsayılan) Görselleri Yükle
+        async function loadSliders() {
+            try {
+                const { data, error } = await db.from('sliders').select('*').order('created_at', { ascending: false });
+                
+                if (!error && data && data.length > 0) {
+                    renderSliders(data);
+                } else {
+                    // Veritabanı henüz boşsa images/ klasöründekileri göster
+                    renderSliders(defaultImages);
+                }
+            } catch (err) {
+                renderSliders(defaultImages);
+            }
+        }
+
+        // 4. Yeni Görsel Ekle
         async function sliderEkle() {
             const fileInput = document.getElementById('fileInput');
             const titleInput = document.getElementById('titleInput');
@@ -296,7 +329,7 @@
             }
         }
 
-        // Sayfa açılınca çalıştır
+        // Sayfa açılınca başlat
         loadCategories();
         loadSliders();
     </script>
