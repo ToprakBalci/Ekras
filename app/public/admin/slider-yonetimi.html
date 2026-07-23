@@ -74,7 +74,7 @@
 
         <div class="content">
             <div class="alert-info">
-                💡 Sisteme kayıtlı <b>tüm projelerin ve sayfaların görselleri</b> aşağıda toplu olarak listelenmektedir. Yeni ekleyeceğiniz görsel seçtiğiniz kategoriye kaydedilecektir.
+                💡 Sisteme kayıtlı <b>tüm projelerin ve sayfaların görselleri</b> aşağıda toplu olarak listelenmektedir.
             </div>
 
             <!-- YENİ GÖRSEL EKLEME ALANI -->
@@ -162,22 +162,29 @@
     </div>
 
     <script>
-        // Tarayıcı belleğinde veri varsa onu al, yoksa tüm kategorilere ait tam örnek listeyi yükle
-        let savedSliders = JSON.parse(localStorage.getItem('ekras_sliders'));
-        let sliders = savedSliders && savedSliders.length > 0 ? savedSliders : [
-            { id: 1, title: 'Anasayfa Banner 1', category: 'Anasayfa Slider', image_url: '../images/hero-1.jpg', is_active: true },
-            { id: 2, title: 'Anasayfa Banner 2', category: 'Anasayfa Slider', image_url: '../images/hero-2.jpg', is_active: true },
-            { id: 3, title: 'Hakkımızda Kapak Görseli', category: 'Hakkımızda Sayfası', image_url: '../images/about.jpg', is_active: true },
-            { id: 4, title: 'Hizmetlerimiz Ana Görsel', category: 'Hizmetlerimiz', image_url: '../images/hizmetler.jpg', is_active: true },
-            { id: 5, title: 'Vela Sapanca Manzara', category: 'Vela Sapanca', image_url: '../images/vela-sapanca.jpg', is_active: true },
-            { id: 6, title: 'Ereğli Konakları Dış Cephe', category: 'Ekşioğlu Konakları (Ereğli)', image_url: '../images/eksioglu-eregli.jpg', is_active: true },
-            { id: 7, title: '4. Etap Genel Görünüm', category: 'Ekşioğlu Konakları 4. Etap', image_url: '../images/etap4.jpg', is_active: true },
-            { id: 8, title: '3. Etap Bloklar', category: 'Ekşioğlu Konakları 3. Etap', image_url: '../images/etap3.jpg', is_active: true },
-            { id: 9, title: '2. Etap Peyzaj', category: 'Ekşioğlu Konakları 2. Etap', image_url: '../images/etap2.jpg', is_active: true },
-            { id: 10, title: '1. Etap Yaşam Alanı', category: 'Ekşioğlu Konakları 1. Etap', image_url: '../images/etap1.jpg', is_active: true },
-            { id: 11, title: 'Life City Proje Görseli', category: 'Ekşioğlu Life City', image_url: '../images/lifecity.jpg', is_active: true },
-            { id: 12, title: 'Evler Genel Görsel', category: 'Ekşioğlu Evleri', image_url: '../images/evler.jpg', is_active: true }
+        // Tarayıcı belleğini tamamen sıfırlayıp her açılışta varsayılan 12 resmi garantilemek için doğrudan tanımlıyoruz:
+        let sliders = [
+            { id: 1, title: 'Anasayfa Banner 1', category: 'Anasayfa Slider', image_url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 2, title: 'Anasayfa Banner 2', category: 'Anasayfa Slider', image_url: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 3, title: 'Hakkımızda Kapak Görseli', category: 'Hakkımızda Sayfası', image_url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 4, title: 'Hizmetlerimiz Ana Görsel', category: 'Hizmetlerimiz', image_url: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 5, title: 'Vela Sapanca Manzara', category: 'Vela Sapanca', image_url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 6, title: 'Ereğli Konakları Dış Cephe', category: 'Ekşioğlu Konakları (Ereğli)', image_url: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 7, title: '4. Etap Genel Görünüm', category: 'Ekşioğlu Konakları 4. Etap', image_url: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 8, title: '3. Etap Bloklar', category: 'Ekşioğlu Konakları 3. Etap', image_url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 9, title: '2. Etap Peyzaj', category: 'Ekşioğlu Konakları 2. Etap', image_url: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 10, title: '1. Etap Yaşam Alanı', category: 'Ekşioğlu Konakları 1. Etap', image_url: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 11, title: 'Life City Proje Görseli', category: 'Ekşioğlu Life City', image_url: 'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?auto=format&fit=crop&w=600&q=80', is_active: true },
+            { id: 12, title: 'Evler Genel Görsel', category: 'Ekşioğlu Evleri', image_url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80', is_active: true }
         ];
+
+        // Eğer daha önce kaydedilmiş güncel veriler varsa onları yükle
+        const stored = localStorage.getItem('ekras_sliders_v2');
+        if (stored) {
+            sliders = JSON.parse(stored);
+        } else {
+            localStorage.setItem('ekras_sliders_v2', JSON.stringify(sliders));
+        }
 
         function renderSliders() {
             const activeContainer = document.getElementById('activeSliders');
@@ -186,14 +193,13 @@
             activeContainer.innerHTML = '';
             passiveContainer.innerHTML = '';
 
-            // FİLTRELEME KALDIRILDI: Bütün dizideki resimler tek seferde listeleniyor
             const activeItems = sliders.filter(item => item.is_active);
             const passiveItems = sliders.filter(item => !item.is_active);
 
             activeItems.forEach(item => {
                 activeContainer.innerHTML += `
                     <div class="image-card">
-                        <img src="${item.image_url}" class="img-preview" onerror="this.src='https://via.placeholder.com/400x200?text=Resim+Bulunamadi'">
+                        <img src="${item.image_url}" class="img-preview" onerror="this.src='https://via.placeholder.com/400x200?text=Resim+Yuklenemedi'">
                         <div class="card-top">
                             <div>
                                 <div style="font-size:15px; font-weight:700;">${item.title}</div>
@@ -212,7 +218,7 @@
             passiveItems.forEach(item => {
                 passiveContainer.innerHTML += `
                     <div class="image-card passive">
-                        <img src="${item.image_url}" class="img-preview" onerror="this.src='https://via.placeholder.com/400x200?text=Resim+Bulunamadi'">
+                        <img src="${item.image_url}" class="img-preview" onerror="this.src='https://via.placeholder.com/400x200?text=Resim+Yuklenemedi'">
                         <div class="card-top">
                             <div>
                                 <div style="font-size:15px; font-weight:700;">${item.title}</div>
@@ -239,9 +245,9 @@
 
             if(!titleInput.value) return alert("Lütfen bir görsel başlığı yazın!");
 
-            let imagePath = '../images/hero-1.jpg'; 
+            let imagePath = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80'; 
             if(fileInput.files && fileInput.files[0]) {
-                imagePath = '../images/' + fileInput.files[0].name;
+                imagePath = URL.createObjectURL(fileInput.files[0]);
             }
 
             const yeniGorsel = {
@@ -253,7 +259,7 @@
             };
 
             sliders.push(yeniGorsel);
-            localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
+            localStorage.setItem('ekras_sliders_v2', JSON.stringify(sliders));
             
             titleInput.value = '';
             fileInput.value = '';
@@ -262,14 +268,14 @@
 
         function toggleStatus(id) {
             sliders = sliders.map(s => s.id === id ? {...s, is_active: !s.is_active} : s);
-            localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
+            localStorage.setItem('ekras_sliders_v2', JSON.stringify(sliders));
             renderSliders();
         }
 
         function deleteSlider(id) {
             if(confirm("Bu görseli silmek istediğinize emin misiniz?")) {
                 sliders = sliders.filter(s => s.id !== id);
-                localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
+                localStorage.setItem('ekras_sliders_v2', JSON.stringify(sliders));
                 renderSliders();
             }
         }
@@ -299,11 +305,11 @@
                 item.title = title;
                 item.category = category;
                 if(editFileInput.files && editFileInput.files[0]) {
-                    item.image_url = '../images/' + editFileInput.files[0].name;
+                    item.image_url = URL.createObjectURL(editFileInput.files[0]);
                 }
             }
 
-            localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
+            localStorage.setItem('ekras_sliders_v2', JSON.stringify(sliders));
             closeModal();
             renderSliders();
         }
