@@ -67,21 +67,23 @@
         .panel-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; }
         
         .image-card {
-            background: #22c55e;
-            color: white;
-            padding: 10px 15px;
+            background: #ffffff;
+            border: 1px solid #22c55e;
+            color: #1e293b;
+            padding: 12px 15px;
             border-radius: 6px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
         }
-        .image-card.passive { background: #ef4444; }
+        .image-card.passive { border-color: #ef4444; }
         
-        .img-preview { width: 60px; height: 40px; object-fit: cover; border-radius: 4px; }
+        .img-preview { width: 80px; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid #cbd5e1; background: #e2e8f0; }
+        .card-info { display: flex; align-items: center; gap: 12px; }
         .card-actions { display: flex; gap: 8px; }
-        .btn-action { background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .btn-action { background: #2563eb; color: white; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
         .btn-delete { background: #dc2626; }
     </style>
 </head>
@@ -93,21 +95,24 @@
     </div>
 
     <div class="main-container">
+        <!-- SIDEBAR -->
         <div class="sidebar">
             <a href="/admin/index.html" class="menu-item"><i class="fas fa-home"></i> Anasayfa</a>
             <a href="/admin/slider-yonetimi.html" class="menu-item active"><i class="fas fa-images"></i> Slider Yönetimi</a>
-            <a href="#" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
-            <a href="#" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
-            <a href="#" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
-            <a href="#" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
+            <a href="/admin/projeler.html" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
+            <a href="/admin/hizmetler.html" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
+            <a href="/admin/sayfalar.html" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
+            <a href="/admin/ayarlar.html" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
             <a href="#" class="menu-item" style="color: #dc2626; margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
         </div>
 
+        <!-- CONTENT -->
         <div class="content">
             <div class="alert-info">
                 💡 Sitenizin ana sayfasındaki slider görsellerini buradan ekleyip düzenleyebilirsiniz.
             </div>
 
+            <!-- YENİ RESİM EKLEME FORMU -->
             <div class="add-box">
                 <h3 style="font-size: 15px; color: #1e293b;">Yeni Slider / Fotoğraf Ekle</h3>
                 <div class="form-row">
@@ -117,15 +122,20 @@
                 </div>
             </div>
 
+            <!-- AKTİF VE PASİF RESİMLER -->
             <div class="drag-container">
+                
+                <!-- AKTİF RESİMLER -->
                 <div class="panel-box">
                     <div class="panel-title" style="color: #16a34a;">
                         <span><i class="fas fa-check-circle"></i> Aktif Resimler</span>
                     </div>
 
                     <div class="image-card">
-                        <img src="https://via.placeholder.com/60x40" class="img-preview" alt="Proje 1">
-                        <span style="font-size:13px; font-weight:600;">Proje 1 - Ana Bina</span>
+                        <div class="card-info">
+                            <img src="https://picsum.photos/id/1068/100/60" class="img-preview" alt="Slider 1">
+                            <span style="font-size:14px; font-weight:600;">Proje 1 - Ana Bina</span>
+                        </div>
                         <div class="card-actions">
                             <button class="btn-action"><i class="fas fa-edit"></i> Düzenle</button>
                             <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Sil</button>
@@ -133,8 +143,10 @@
                     </div>
 
                     <div class="image-card">
-                        <img src="https://via.placeholder.com/60x40" class="img-preview" alt="Proje 2">
-                        <span style="font-size:13px; font-weight:600;">Villa Projesi Dış Görünüm</span>
+                        <div class="card-info">
+                            <img src="https://picsum.photos/id/1069/100/60" class="img-preview" alt="Slider 2">
+                            <span style="font-size:14px; font-weight:600;">Villa Projesi Dış Görünüm</span>
+                        </div>
                         <div class="card-actions">
                             <button class="btn-action"><i class="fas fa-edit"></i> Düzenle</button>
                             <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Sil</button>
@@ -142,20 +154,24 @@
                     </div>
                 </div>
 
+                <!-- PASİF RESİMLER -->
                 <div class="panel-box">
                     <div class="panel-title" style="color: #dc2626;">
                         <span><i class="fas fa-times-circle"></i> Pasif Resimler</span>
                     </div>
 
                     <div class="image-card passive">
-                        <img src="https://via.placeholder.com/60x40" class="img-preview" alt="Eski Proje">
-                        <span style="font-size:13px; font-weight:600;">Eski Sezon Kampanya</span>
+                        <div class="card-info">
+                            <img src="https://picsum.photos/id/1070/100/60" class="img-preview" alt="Slider Pasif">
+                            <span style="font-size:14px; font-weight:600;">Eski Sezon Kampanya</span>
+                        </div>
                         <div class="card-actions">
                             <button class="btn-action" style="background:#16a34a;">Aktif Et</button>
                             <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Sil</button>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
