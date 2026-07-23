@@ -116,9 +116,9 @@
             <div class="add-box">
                 <h3 style="font-size: 15px; color: #1e293b;">Yeni Slider / Fotoğraf Ekle</h3>
                 <div class="form-row">
-                    <input type="file" class="input-text" accept="image/*">
-                    <input type="text" class="input-text" placeholder="Görsel Başlığı (Örn: Ekras Yapı Lüks Proje)">
-                    <button class="btn-add"><i class="fas fa-plus"></i> Sitemize Ekle</button>
+                    <input type="file" id="fileInput" class="input-text" accept="image/*">
+                    <input type="text" id="titleInput" class="input-text" placeholder="Görsel Başlığı (Örn: Ekras Yapı Lüks Proje)">
+                    <button class="btn-add" id="btnUpload"><i class="fas fa-plus"></i> Sitemize Ekle</button>
                 </div>
             </div>
 
@@ -130,28 +130,7 @@
                     <div class="panel-title" style="color: #16a34a;">
                         <span><i class="fas fa-check-circle"></i> Aktif Resimler</span>
                     </div>
-
-                    <div class="image-card">
-                        <div class="card-info">
-                            <img src="https://picsum.photos/id/1068/100/60" class="img-preview" alt="Slider 1">
-                            <span style="font-size:14px; font-weight:600;">Proje 1 - Ana Bina</span>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn-action"><i class="fas fa-edit"></i> Düzenle</button>
-                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Sil</button>
-                        </div>
-                    </div>
-
-                    <div class="image-card">
-                        <div class="card-info">
-                            <img src="https://picsum.photos/id/1069/100/60" class="img-preview" alt="Slider 2">
-                            <span style="font-size:14px; font-weight:600;">Villa Projesi Dış Görünüm</span>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn-action"><i class="fas fa-edit"></i> Düzenle</button>
-                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Sil</button>
-                        </div>
-                    </div>
+                    <div id="activeSliders">Yükleniyor...</div>
                 </div>
 
                 <!-- PASİF RESİMLER -->
@@ -159,76 +138,138 @@
                     <div class="panel-title" style="color: #dc2626;">
                         <span><i class="fas fa-times-circle"></i> Pasif Resimler</span>
                     </div>
-
-                    <div class="image-card passive">
-                        <div class="card-info">
-                            <img src="https://picsum.photos/id/1070/100/60" class="img-preview" alt="Slider Pasif">
-                            <span style="font-size:14px; font-weight:600;">Eski Sezon Kampanya</span>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn-action" style="background:#16a34a;">Aktif Et</button>
-                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Sil</button>
-                        </div>
-                    </div>
+                    <div id="passiveSliders">Yükleniyor...</div>
                 </div>
 
             </div>
         </div>
     </div>
-<!-- Supabase JS Kütüphanesi -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-    // Supabase Bağlantı Bilgileri
-    const SUPABASE_URL = "https://waursqsdipmntkhfwlom.supabase.co/rest/v1/";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhdXJzcXNkaXBtbnRraGZ3bG9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTQ0MTAsImV4cCI6MjEwMDM5MDQxMH0.bVxwSJ-6Kn7zQnu1KXG5MTDoJocCFlrZNXQAT71VB2U";
-    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    <!-- Supabase JS Kütüphanesi -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    // Resim Yükleme Fonksiyonu
-    async function sliderEkle() {
-        const fileInput = document.querySelector('input[type="file"]');
-        const titleInput = document.querySelector('input[placeholder*="Görsel Başlığı"]');
-        const file = fileInput.files[0];
-        const title = titleInput.value;
+    <script>
+        // Supabase Bağlantı Bilgileri (REST uzantısı kaldırıldı)
+        const SUPABASE_URL = "https://waursqsdipmntkhfwlom.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhdXJzcXNkaXBtbnRraGZ3bG9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTQ0MTAsImV4cCI6MjEwMDM5MDQxMH0.bVxwSJ-6Kn7zQnu1KXG5MTDoJocCFlrZNXQAT71VB2U";
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        if (!file) {
-            alert("Lütfen bir resim seçin!");
-            return;
+        // 1. Veritabanındaki Resimleri Çek ve Ekrana Bas
+        async function loadSliders() {
+            const { data, error } = await db.from('sliders').select('*').order('created_at', { ascending: false });
+            
+            if (error) {
+                console.error("Resimler çekilirken hata oluştu:", error.message);
+                return;
+            }
+
+            const activeContainer = document.getElementById('activeSliders');
+            const passiveContainer = document.getElementById('passiveSliders');
+            
+            activeContainer.innerHTML = '';
+            passiveContainer.innerHTML = '';
+
+            if (data.length === 0) {
+                activeContainer.innerHTML = '<p style="color:#94a3b8; font-size:13px;">Henüz aktif resim eklenmemiş.</p>';
+                passiveContainer.innerHTML = '<p style="color:#94a3b8; font-size:13px;">Pasif resim yok.</p>';
+                return;
+            }
+
+            data.forEach(item => {
+                const cardHTML = `
+                    <div class="image-card ${item.is_active ? '' : 'passive'}">
+                        <div class="card-info">
+                            <img src="${item.image_url}" class="img-preview" alt="Slider">
+                            <span style="font-size:14px; font-weight:600;">${item.title || 'Başlıksız Görsel'}</span>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-action" style="background:${item.is_active ? '#eab308' : '#16a34a'}" onclick="toggleStatus(${item.id}, ${!item.is_active})">
+                                ${item.is_active ? 'Pasif Yap' : 'Aktif Et'}
+                            </button>
+                            <button class="btn-action btn-delete" onclick="deleteSlider(${item.id})"><i class="fas fa-trash"></i> Sil</button>
+                        </div>
+                    </div>
+                `;
+
+                if (item.is_active) {
+                    activeContainer.innerHTML += cardHTML;
+                } else {
+                    passiveContainer.innerHTML += cardHTML;
+                }
+            });
         }
 
-        // 1. Resim Dosyasını Supabase Storage'a Yükle
-        const fileName = `${Date.now()}_${file.name}`;
-        const { data: uploadData, error: uploadError } = await db.storage
-            .from('slider-images')
-            .upload(fileName, file);
+        // 2. Resim Yükleme Fonksiyonu
+        async function sliderEkle() {
+            const fileInput = document.getElementById('fileInput');
+            const titleInput = document.getElementById('titleInput');
+            const btnUpload = document.getElementById('btnUpload');
+            
+            const file = fileInput.files[0];
+            const title = titleInput.value;
 
-        if (uploadError) {
-            alert("Resim yüklenirken hata oluştu: " + uploadError.message);
-            return;
+            if (!file) {
+                alert("Lütfen bir resim seçin!");
+                return;
+            }
+
+            btnUpload.disabled = true;
+            btnUpload.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Yükleniyor...';
+
+            // Storage'a Yükle
+            const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+            const { data: uploadData, error: uploadError } = await db.storage
+                .from('slider-images')
+                .upload(fileName, file);
+
+            if (uploadError) {
+                btnUpload.disabled = false;
+                btnUpload.innerHTML = '<i class="fas fa-plus"></i> Sitemize Ekle';
+                alert("Resim yüklenirken hata oluştu: " + uploadError.message);
+                return;
+            }
+
+            // Public URL Al
+            const { data: urlData } = db.storage
+                .from('slider-images')
+                .getPublicUrl(fileName);
+
+            const imageUrl = urlData.publicUrl;
+
+            // Veritabanına Kaydet
+            const { error: dbError } = await db
+                .from('sliders')
+                .insert([{ title: title, image_url: imageUrl, is_active: true }]);
+
+            if (dbError) {
+                alert("Veritabanına kaydedilirken hata oluştu: " + dbError.message);
+            } else {
+                fileInput.value = '';
+                titleInput.value = '';
+                loadSliders(); // Sayfayı yenilemeden listeyi güncelle
+            }
+
+            btnUpload.disabled = false;
+            btnUpload.innerHTML = '<i class="fas fa-plus"></i> Sitemize Ekle';
         }
 
-        // 2. Resmin Public URL'ini Al
-        const { data: urlData } = db.storage
-            .from('slider-images')
-            .getPublicUrl(fileName);
-
-        const imageUrl = urlData.publicUrl;
-
-        // 3. Veritabanına (sliders tablosuna) Kaydet
-        const { error: dbError } = await db
-            .from('sliders')
-            .insert([{ title: title, image_url: imageUrl, is_active: true }]);
-
-        if (dbError) {
-            alert("Veritabanına kaydedilirken hata oluştu: " + dbError.message);
-        } else {
-            alert("Slider başarıyla eklendi!");
-            location.reload(); // Sayfayı yenile
+        // 3. Durum Değiştirme (Aktif / Pasif)
+        async function toggleStatus(id, newStatus) {
+            await db.from('sliders').update({ is_active: newStatus }).eq('id', id);
+            loadSliders();
         }
-    }
 
-    // Butona Tıklama Olayını Bağla
-    document.querySelector('.btn-add').addEventListener('click', sliderEkle);
-</script>
+        // 4. Silme İşlemi
+        async function deleteSlider(id) {
+            if (confirm("Bu resmi silmek istediğinize emin misiniz?")) {
+                await db.from('sliders').delete().eq('id', id);
+                loadSliders();
+            }
+        }
+
+        // Butona Tıklama Olayı ve İlk Yükleme
+        document.getElementById('btnUpload').addEventListener('click', sliderEkle);
+        loadSliders();
+    </script>
 </body>
 </html>
