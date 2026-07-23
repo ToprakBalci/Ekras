@@ -85,6 +85,13 @@
             border: 1px solid #e5e7eb;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             text-align: center;
+            text-decoration: none;
+            display: block;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
         .card h3 { color: #1f2937; margin-bottom: 10px; font-size: 16px; }
     </style>
@@ -106,12 +113,12 @@
         
         <!-- SIDEBAR -->
         <div class="sidebar">
-            <a href="#" class="menu-item active"><i class="fas fa-home"></i> Anasayfa</a>
-            <a href="slider-yonetimi.html" class="menu-item"><i class="fas fa-images"></i> Slider Yönetimi</a>
-            <a href="#" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
-            <a href="#" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
-            <a href="#" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
-            <a href="#" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
+            <a href="index.html" class="menu-item active"><i class="fas fa-home"></i> Anasayfa</a>
+            <a href="slider.html" class="menu-item"><i class="fas fa-images"></i> Slider Yönetimi</a>
+            <a href="projeler.html" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
+            <a href="hizmetler.html" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
+            <a href="sayfalar.html" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
+            <a href="ayarlar.html" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
             <a href="login.html" class="menu-item" style="color: #dc2626; margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
         </div>
 
@@ -125,18 +132,18 @@
             <p style="color: #6b7280; font-size: 14px;">Web sitenizin içeriklerini ve görsellerini buradan anlık olarak güncelleyebilirsiniz.</p>
 
             <div class="dashboard-cards">
-                <div class="card">
+                <a href="slider.html" class="card">
                     <h3>SLİDER VE BANNER GÖRSELLERİ</h3>
                     <p style="color: #2563eb; font-weight: bold; margin-top: 10px;">Ana sayfa görsellerini yönetin</p>
-                </div>
-                <div class="card">
+                </a>
+                <a href="projeler.html" class="card">
                     <h3>TAMAMLANAN VE DEVAM EDEN PROJELER</h3>
                     <p style="color: #2563eb; font-weight: bold; margin-top: 10px;">Proje portföyünü düzenleyin</p>
-                </div>
-                <div class="card">
+                </a>
+                <a href="ayarlar.html" class="card">
                     <h3>İLETİŞİM VE ADRES BİLGİLERİ</h3>
                     <p style="color: #2563eb; font-weight: bold; margin-top: 10px;">Firma bilgilerini güncelleyin</p>
-                </div>
+                </a>
             </div>
         </div>
 
