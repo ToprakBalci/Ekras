@@ -74,14 +74,14 @@
 
         <div class="content">
             <div class="alert-info">
-                💡 Aşağıdaki menüden hangi alanı seçerseniz, o alanın görselleri listelenir. Aynı zamanda yeni görsel eklediğinizde bu seçili alana kaydedilir.
+                💡 Yukarıdaki açılır menüden hangi alanı seçerseniz, aşağıda anında sadece o alana ait görseller listelenir. Aynı zamanda yeni ekleyeceğiniz görseller de seçili olan bu alana kaydedilir.
             </div>
 
             <!-- TEK KONTROL MENÜSÜ & EKLEME ALANI -->
             <div class="add-box">
                 <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Görsel Alanı Seçimi & Yeni Görsel Ekle</h3>
                 <div class="form-row">
-                    <!-- BURADAKİ DEĞİŞTİRME AŞAĞIYI ANINDA FİLTRELER -->
+                    <!-- onchange="renderSliders()" sayesinde menü değiştirildiği an aşağısı filtrelenir -->
                     <select id="categoryInput" class="input-text" onchange="renderSliders()">
                         <optgroup label="Genel Sayfa Alanları">
                             <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
@@ -180,7 +180,7 @@
             activeContainer.innerHTML = '';
             passiveContainer.innerHTML = '';
 
-            // Sadece yukarıdaki menüde seçili olan kategorinin görsellerini filtrele
+            // Seçilen kategoriye göre filtreleme yapıyoruz
             const filteredSliders = sliders.filter(item => item.category === selectedCategory);
 
             const activeItems = filteredSliders.filter(item => item.is_active);
