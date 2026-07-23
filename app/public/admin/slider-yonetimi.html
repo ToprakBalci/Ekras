@@ -74,14 +74,14 @@
 
         <div class="content">
             <div class="alert-info">
-                💡 Yukarıdaki menüden hangi projeyi veya alanı seçerseniz, aşağıda o alana ait görseller listelenir. Yeni eklediğiniz görseller doğrudan seçili olan kategoriye kaydedilir.
+                💡 Sisteme kayıtlı <b>tüm projelerin ve sayfaların görselleri</b> aşağıda toplu olarak listelenmektedir. Yeni ekleyeceğiniz görsel seçtiğiniz kategoriye kaydedilecektir.
             </div>
 
-            <!-- TEK KONTROL MENÜSÜ & EKLEME ALANI -->
+            <!-- YENİ GÖRSEL EKLEME ALANI -->
             <div class="add-box">
-                <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Görsel Alanı Seçimi & Yeni Görsel Ekle</h3>
+                <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Yeni Görsel Ekle</h3>
                 <div class="form-row">
-                    <select id="categoryInput" class="input-text" onchange="renderSliders()">
+                    <select id="categoryInput" class="input-text">
                         <optgroup label="Genel Sayfa Alanları">
                             <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
                             <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
@@ -104,18 +104,18 @@
                 </div>
             </div>
 
-            <!-- LİSTELEME ALANLARI -->
+            <!-- TÜM RESİMLERİN LİSTELENDİĞİ ANA ALAN -->
             <div class="drag-container">
                 <div class="panel-box">
                     <div class="panel-title" style="color: #16a34a;">
-                        <span><i class="fas fa-check-circle"></i> Sitede Aktif Görseller</span>
+                        <span><i class="fas fa-check-circle"></i> Sitedeki Tüm Aktif Görseller</span>
                     </div>
                     <div id="activeSliders">Yükleniyor...</div>
                 </div>
 
                 <div class="panel-box">
                     <div class="panel-title" style="color: #dc2626;">
-                        <span><i class="fas fa-times-circle"></i> Pasif Görseller</span>
+                        <span><i class="fas fa-times-circle"></i> Sitedeki Tüm Pasif Görseller</span>
                     </div>
                     <div id="passiveSliders">Yükleniyor...</div>
                 </div>
@@ -162,7 +162,7 @@
     </div>
 
     <script>
-        // Tarayıcı belleğinde veri varsa onu al, yoksa her kategori için eksiksiz örnekler oluştur
+        // Tarayıcı belleğinde veri varsa onu al, yoksa tüm kategorilere ait tam örnek listeyi yükle
         let savedSliders = JSON.parse(localStorage.getItem('ekras_sliders'));
         let sliders = savedSliders && savedSliders.length > 0 ? savedSliders : [
             { id: 1, title: 'Anasayfa Banner 1', category: 'Anasayfa Slider', image_url: '../images/hero-1.jpg', is_active: true },
@@ -182,16 +182,13 @@
         function renderSliders() {
             const activeContainer = document.getElementById('activeSliders');
             const passiveContainer = document.getElementById('passiveSliders');
-            const selectedCategory = document.getElementById('categoryInput').value;
             
             activeContainer.innerHTML = '';
             passiveContainer.innerHTML = '';
 
-            // Seçilen kategoriye ait olan tüm görselleri süzüyoruz
-            const filteredSliders = sliders.filter(item => item.category === selectedCategory);
-
-            const activeItems = filteredSliders.filter(item => item.is_active);
-            const passiveItems = filteredSliders.filter(item => !item.is_active);
+            // FİLTRELEME KALDIRILDI: Bütün dizideki resimler tek seferde listeleniyor
+            const activeItems = sliders.filter(item => item.is_active);
+            const passiveItems = sliders.filter(item => !item.is_active);
 
             activeItems.forEach(item => {
                 activeContainer.innerHTML += `
@@ -231,8 +228,8 @@
                 `;
             });
 
-            if (activeContainer.innerHTML === '') activeContainer.innerHTML = '<p style="color:#64748b; font-size:13px; margin-top:10px;">Bu alanda aktif görsel bulunamadı.</p>';
-            if (passiveContainer.innerHTML === '') passiveContainer.innerHTML = '<p style="color:#64748b; font-size:13px; margin-top:10px;">Bu alanda pasif görsel bulunamadı.</p>';
+            if (activeContainer.innerHTML === '') activeContainer.innerHTML = '<p style="color:#64748b; font-size:13px; margin-top:10px;">Aktif görsel bulunamadı.</p>';
+            if (passiveContainer.innerHTML === '') passiveContainer.innerHTML = '<p style="color:#64748b; font-size:13px; margin-top:10px;">Pasif görsel bulunamadı.</p>';
         }
 
         function sliderEkle() {
