@@ -1,1 +1,46 @@
-
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekras - Projelerimiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; display: flex; flex-direction: column; height: 100vh; }
+        .top-bar { background-color: #ffffff; height: 60px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+        .brand { font-size: 22px; font-weight: bold; color: #1e3a8a; display: flex; align-items: center; gap: 8px; }
+        .btn-top { padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 600; color: white; text-decoration: none; background-color: #2563eb; }
+        .main-container { display: flex; flex: 1; }
+        .sidebar { width: 220px; background-color: #ffffff; border-right: 1px solid #e0e0e0; padding-top: 10px; }
+        .menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: #4b5563; text-decoration: none; font-size: 14px; transition: all 0.2s; }
+        .menu-item:hover, .menu-item.active { background-color: #eff6ff; color: #2563eb; border-left: 4px solid #2563eb; }
+        .menu-item i { width: 18px; font-size: 15px; }
+        .content { flex: 1; padding: 25px; }
+        .card { background: white; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="brand"><i class="fas fa-building" style="color:#2563eb;"></i> EKRAS Panel</div>
+        <a href="/" target="_blank" class="btn-top"><i class="fas fa-globe"></i> Sitemi Göster</a>
+    </div>
+    <div class="main-container">
+        <div class="sidebar">
+            <a href="/admin/index.html" class="menu-item"><i class="fas fa-home"></i> Anasayfa</a>
+            <a href="/admin/slider-yonetimi.html" class="menu-item"><i class="fas fa-images"></i> Slider Yönetimi</a>
+            <a href="/admin/projeler.html" class="menu-item active"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
+            <a href="/admin/hizmetler.html" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
+            <a href="/admin/sayfalar.html" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
+            <a href="/admin/ayarlar.html" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
+            <a href="#" class="menu-item" style="color: #dc2626; margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+        </div>
+        <div class="content">
+            <div class="card">
+                <h2 style="color: #1e3a8a; margin-bottom: 10px;">Projeler Yönetimi</h2>
+                <p style="color: #64748b;">Tamamlanan ve devam eden projeleri buradan ekleyip düzenleyebilirsiniz.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
