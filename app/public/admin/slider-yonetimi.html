@@ -74,38 +74,15 @@
 
         <div class="content">
             <div class="alert-info">
-                💡 Hangi alanı seçerseniz, aşağıda sadece o alana ait görseller listelenir. Yeni görsel eklerken seçtiğiniz kategoriye kaydedilir.
+                💡 Aşağıdaki menüden hangi alanı seçerseniz, o alanın görselleri listelenir. Aynı zamanda yeni görsel eklediğinizde bu seçili alana kaydedilir.
             </div>
 
-            <!-- YENİ RESİM EKLEME & FİLTRELEME ALANI -->
+            <!-- TEK KONTROL MENÜSÜ & EKLEME ALANI -->
             <div class="add-box">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h3 style="font-size: 15px; color: #1e293b;">Yeni Görsel Ekle & Alan Seçimi</h3>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 13px; font-weight: bold; color: #475569;">Listeleme Filtresi:</span>
-                        <select id="filterCategory" class="input-text" style="padding: 6px 12px; font-size: 13px;" onchange="renderSliders()">
-                            <option value="TÜMÜ">🔍 Tüm Görselleri Göster</option>
-                            <optgroup label="Genel Sayfa Alanları">
-                                <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
-                                <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
-                                <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
-                            </optgroup>
-                            <optgroup label="Projelerimiz">
-                                <option value="Vela Sapanca">🏢 Vela Sapanca</option>
-                                <option value="Ekşioğlu Konakları (Ereğli)">🏢 Ekşioğlu Konakları (Ereğli)</option>
-                                <option value="Ekşioğlu Konakları 4. Etap">🏢 Ekşioğlu Konakları 4. Etap</option>
-                                <option value="Ekşioğlu Konakları 3. Etap">🏢 Ekşioğlu Konakları 3. Etap</option>
-                                <option value="Ekşioğlu Konakları 2. Etap">🏢 Ekşioğlu Konakları 2. Etap</option>
-                                <option value="Ekşioğlu Konakları 1. Etap">🏢 Ekşioğlu Konakları 1. Etap</option>
-                                <option value="Ekşioğlu Life City">🏢 Ekşioğlu Life City</option>
-                                <option value="Ekşioğlu Evleri">🏢 Ekşioğlu Evleri</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-
+                <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Görsel Alanı Seçimi & Yeni Görsel Ekle</h3>
                 <div class="form-row">
-                    <select id="categoryInput" class="input-text">
+                    <!-- BURADAKİ DEĞİŞTİRME AŞAĞIYI ANINDA FİLTRELER -->
+                    <select id="categoryInput" class="input-text" onchange="renderSliders()">
                         <optgroup label="Genel Sayfa Alanları">
                             <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
                             <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
@@ -198,16 +175,13 @@
         function renderSliders() {
             const activeContainer = document.getElementById('activeSliders');
             const passiveContainer = document.getElementById('passiveSliders');
-            const selectedFilter = document.getElementById('filterCategory').value;
+            const selectedCategory = document.getElementById('categoryInput').value;
             
             activeContainer.innerHTML = '';
             passiveContainer.innerHTML = '';
 
-            // Seçilen filtreye göre listeyi süz
-            let filteredSliders = sliders;
-            if (selectedFilter !== 'TÜMÜ') {
-                filteredSliders = sliders.filter(item => item.category === selectedFilter);
-            }
+            // Sadece yukarıdaki menüde seçili olan kategorinin görsellerini filtrele
+            const filteredSliders = sliders.filter(item => item.category === selectedCategory);
 
             const activeItems = filteredSliders.filter(item => item.is_active);
             const passiveItems = filteredSliders.filter(item => !item.is_active);
@@ -277,9 +251,6 @@
             sliders.push(yeniGorsel);
             localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
             
-            // Eklenen kategoriye filtreyi otomatik getir ki hemen görebil
-            document.getElementById('filterCategory').value = categoryInput.value;
-
             titleInput.value = '';
             fileInput.value = '';
             renderSliders();
