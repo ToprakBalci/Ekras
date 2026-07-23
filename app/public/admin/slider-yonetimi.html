@@ -81,7 +81,7 @@
                 <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Yeni Görsel Ekle</h3>
                 <div class="form-row">
                     <select id="categoryInput" class="input-text">
-                        <!-- Burası Javascript ile dinamik dolacak -->
+                        <!-- Javascript ile dolacak -->
                     </select>
                     <input type="file" id="fileInput" class="input-text" accept="image/*">
                     <input type="text" id="titleInput" class="input-text" placeholder="Görsel Adı / Başlığı">
@@ -121,7 +121,7 @@
                 
                 <label style="font-size: 13px; font-weight: bold;">Görsel Nereye Ait?</label>
                 <select id="editCategory" class="input-text">
-                    <!-- Burası da Javascript ile dinamik dolacak -->
+                    <!-- Javascript ile dolacak -->
                 </select>
 
                 <label style="font-size: 13px; font-weight: bold;">Görsel Başlığı:</label>
@@ -135,8 +135,7 @@
         </div>
     </div>
 
-    <!-- Kütüphaneler ve Data JS -->
-    <script src="../js/data.js"></script>
+    <!-- Supabase JS Kütüphanesi -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
@@ -144,47 +143,22 @@
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhdXJzcXNkaXBtbnRraGZ3bG9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTQ0MTAsImV4cCI6MjEwMDM5MDQxMH0.bVxwSJ-6Kn7zQnu1KXG5MTDoJocCFlrZNXQAT71VB2U";
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // 1. Projeleri ve Kategorileri Dinamik Olarak Menüye Doldur
-        async function loadCategories() {
+        // 1. Kategorileri ve Projelerini Doğrudan Menüye Yazdır
+        function loadCategories() {
             const catSelect = document.getElementById('categoryInput');
             const editCatSelect = document.getElementById('editCategory');
 
-            let optionsHTML = `
+            const optionsHTML = `
                 <optgroup label="Genel Sayfa Alanları">
                     <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
                     <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
                     <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
                 </optgroup>
+                <optgroup label="Projelerimiz">
+                    <option value="Vela Sapanca">🏢 Vela Sapanca</option>
+                    <option value="Ekşioğlu Konakları (Ereğli)">🏢 Ekşioğlu Konakları (Ereğli)</option>
+                </optgroup>
             `;
-
-            optionsHTML += `<optgroup label="Projelerimiz">`;
-
-            // A) data.js içindeki projeleri oku
-            if (typeof projects !== 'undefined' && Array.isArray(projects) && projects.length > 0) {
-                projects.forEach(p => {
-                    const projName = p.title || p.name;
-                    if (projName) {
-                        optionsHTML += `<option value="${projName}">🏢 ${projName}</option>`;
-                    }
-                });
-            }
-
-            // B) Supabase üzerinde 'projects' tablosu varsa oradan da çekip ekle
-            try {
-                const { data: dbProjects, error } = await db.from('projects').select('*');
-                if (!error && dbProjects && dbProjects.length > 0) {
-                    dbProjects.forEach(p => {
-                        const projName = p.title || p.name || p.baslik;
-                        if (projName) {
-                            optionsHTML += `<option value="${projName}">🏗️ ${projName}</option>`;
-                        }
-                    });
-                }
-            } catch (err) {
-                console.log("Supabase tablo kontrolü:", err);
-            }
-
-            optionsHTML += `</optgroup>`;
 
             catSelect.innerHTML = optionsHTML;
             editCatSelect.innerHTML = optionsHTML;
@@ -322,13 +296,9 @@
             }
         }
 
-        // Sayfa yüklenince hem menüleri hem görselleri çek
-        async function init() {
-            await loadCategories();
-            await loadSliders();
-        }
-
-        init();
+        // Sayfa açılınca çalıştır
+        loadCategories();
+        loadSliders();
     </script>
 </body>
 </html>
