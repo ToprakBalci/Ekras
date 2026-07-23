@@ -175,6 +175,60 @@
             </div>
         </div>
     </div>
+<!-- Supabase JS Kütüphanesi -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+    // Supabase Bağlantı Bilgileri
+    const SUPABASE_URL = "https://waursqsdipmntkhfwlom.supabase.co/rest/v1/";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhdXJzcXNkaXBtbnRraGZ3bG9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTQ0MTAsImV4cCI6MjEwMDM5MDQxMH0.bVxwSJ-6Kn7zQnu1KXG5MTDoJocCFlrZNXQAT71VB2U";
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Resim Yükleme Fonksiyonu
+    async function sliderEkle() {
+        const fileInput = document.querySelector('input[type="file"]');
+        const titleInput = document.querySelector('input[placeholder*="Görsel Başlığı"]');
+        const file = fileInput.files[0];
+        const title = titleInput.value;
+
+        if (!file) {
+            alert("Lütfen bir resim seçin!");
+            return;
+        }
+
+        // 1. Resim Dosyasını Supabase Storage'a Yükle
+        const fileName = `${Date.now()}_${file.name}`;
+        const { data: uploadData, error: uploadError } = await db.storage
+            .from('slider-images')
+            .upload(fileName, file);
+
+        if (uploadError) {
+            alert("Resim yüklenirken hata oluştu: " + uploadError.message);
+            return;
+        }
+
+        // 2. Resmin Public URL'ini Al
+        const { data: urlData } = db.storage
+            .from('slider-images')
+            .getPublicUrl(fileName);
+
+        const imageUrl = urlData.publicUrl;
+
+        // 3. Veritabanına (sliders tablosuna) Kaydet
+        const { error: dbError } = await db
+            .from('sliders')
+            .insert([{ title: title, image_url: imageUrl, is_active: true }]);
+
+        if (dbError) {
+            alert("Veritabanına kaydedilirken hata oluştu: " + dbError.message);
+        } else {
+            alert("Slider başarıyla eklendi!");
+            location.reload(); // Sayfayı yenile
+        }
+    }
+
+    // Butona Tıklama Olayını Bağla
+    document.querySelector('.btn-add').addEventListener('click', sliderEkle);
+</script>
 </body>
 </html>
