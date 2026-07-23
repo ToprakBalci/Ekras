@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ekras - Görsel Yönetimi</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -62,39 +63,53 @@
 
     <div class="main-container">
         <div class="sidebar">
-            <a href="index.html" class="menu-item"><i class="fas fa-home"></i> Anasayfa</a>
-            <a href="slider-yonetimi.html" class="menu-item active"><i class="fas fa-images"></i> Görsel Yönetimi</a>
-            <a href="projeler.html" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
-            <a href="hizmetler.html" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
-            <a href="sayfalar.html" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
-            <a href="ayarlar.html" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
+            <a href="/admin/index.html" class="menu-item"><i class="fas fa-home"></i> Anasayfa</a>
+            <a href="/admin/slider-yonetimi.html" class="menu-item active"><i class="fas fa-images"></i> Görsel Yönetimi</a>
+            <a href="/admin/projeler.html" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
+            <a href="/admin/hizmetler.html" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
+            <a href="/admin/sayfalar.html" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
+            <a href="/admin/ayarlar.html" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
             <a href="#" class="menu-item" style="color: #dc2626; margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
         </div>
 
         <div class="content">
             <div class="alert-info">
-                💡 <b>images/</b> klasöründeki görselleriniz listelenmektedir. Yaptığınız değişiklikler anında kaydedilir.
+                💡 Yukarıdaki açılır menüden hangi alanı seçerseniz, aşağıda anında sadece o alana ait görseller listelenir. Aynı zamanda yeni ekleyeceğiniz görseller de seçili olan bu alana kaydedilir.
             </div>
 
+            <!-- TEK KONTROL MENÜSÜ & EKLEME ALANI -->
             <div class="add-box">
-                <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Yeni Görsel Ekle</h3>
+                <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Görsel Alanı Seçimi & Yeni Görsel Ekle</h3>
                 <div class="form-row">
-                    <select id="categoryInput" class="input-text">
-                        <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
-                        <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
-                        <option value="Hizmetlerimiz">📍 Hizmetlerimiz</option>
-                        <option value="Projelerimiz">🏢 Projelerimiz</option>
+                    <!-- onchange="renderSliders()" sayesinde menü değiştirildiği an aşağısı filtrelenir -->
+                    <select id="categoryInput" class="input-text" onchange="renderSliders()">
+                        <optgroup label="Genel Sayfa Alanları">
+                            <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
+                            <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
+                            <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
+                        </optgroup>
+                        <optgroup label="Projelerimiz">
+                            <option value="Vela Sapanca">🏢 Vela Sapanca</option>
+                            <option value="Ekşioğlu Konakları (Ereğli)">🏢 Ekşioğlu Konakları (Ereğli)</option>
+                            <option value="Ekşioğlu Konakları 4. Etap">🏢 Ekşioğlu Konakları 4. Etap</option>
+                            <option value="Ekşioğlu Konakları 3. Etap">🏢 Ekşioğlu Konakları 3. Etap</option>
+                            <option value="Ekşioğlu Konakları 2. Etap">🏢 Ekşioğlu Konakları 2. Etap</option>
+                            <option value="Ekşioğlu Konakları 1. Etap">🏢 Ekşioğlu Konakları 1. Etap</option>
+                            <option value="Ekşioğlu Life City">🏢 Ekşioğlu Life City</option>
+                            <option value="Ekşioğlu Evleri">🏢 Ekşioğlu Evleri</option>
+                        </optgroup>
                     </select>
-                    <input type="text" id="imagePathInput" class="input-text" placeholder="Dosya Yolu (örn: ../images/hero-1.jpg)">
-                    <input type="text" id="titleInput" class="input-text" placeholder="Görsel Başlığı">
-                    <button class="btn-add" onclick="sliderEkle()"><i class="fas fa-plus"></i> Ekle</button>
+                    <input type="file" id="fileInput" class="input-text" accept="image/*">
+                    <input type="text" id="titleInput" class="input-text" placeholder="Görsel Adı / Başlığı">
+                    <button class="btn-add" id="btnUpload" onclick="sliderEkle()"><i class="fas fa-plus"></i> Ekle</button>
                 </div>
             </div>
 
+            <!-- LİSTELEME ALANLARI -->
             <div class="drag-container">
                 <div class="panel-box">
                     <div class="panel-title" style="color: #16a34a;">
-                        <span><i class="fas fa-check-circle"></i> Aktif Görseller</span>
+                        <span><i class="fas fa-check-circle"></i> Sitede Aktif Görseller</span>
                     </div>
                     <div id="activeSliders">Yükleniyor...</div>
                 </div>
@@ -118,18 +133,29 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="editId">
-                <label style="font-size: 13px; font-weight: bold;">Kategori:</label>
+                <label style="font-size: 13px; font-weight: bold;">Kategori / Konum:</label>
                 <select id="editCategory" class="input-text">
-                    <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
-                    <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
-                    <option value="Hizmetlerimiz">📍 Hizmetlerimiz</option>
-                    <option value="Projelerimiz">🏢 Projelerimiz</option>
+                    <optgroup label="Genel Sayfa Alanları">
+                        <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
+                        <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
+                        <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
+                    </optgroup>
+                    <optgroup label="Projelerimiz">
+                        <option value="Vela Sapanca">🏢 Vela Sapanca</option>
+                        <option value="Ekşioğlu Konakları (Ereğli)">🏢 Ekşioğlu Konakları (Ereğli)</option>
+                        <option value="Ekşioğlu Konakları 4. Etap">🏢 Ekşioğlu Konakları 4. Etap</option>
+                        <option value="Ekşioğlu Konakları 3. Etap">🏢 Ekşioğlu Konakları 3. Etap</option>
+                        <option value="Ekşioğlu Konakları 2. Etap">🏢 Ekşioğlu Konakları 2. Etap</option>
+                        <option value="Ekşioğlu Konakları 1. Etap">🏢 Ekşioğlu Konakları 1. Etap</option>
+                        <option value="Ekşioğlu Life City">🏢 Ekşioğlu Life City</option>
+                        <option value="Ekşioğlu Evleri">🏢 Ekşioğlu Evleri</option>
+                    </optgroup>
                 </select>
                 <label style="font-size: 13px; font-weight: bold;">Görsel Başlığı:</label>
                 <input type="text" id="editTitle" class="input-text">
                 
-                <label style="font-size: 13px; font-weight: bold;">Dosya Yolu:</label>
-                <input type="text" id="editImagePath" class="input-text">
+                <label style="font-size: 13px; font-weight: bold;">Yeni Fotoğraf Seç (İsteğe Bağlı):</label>
+                <input type="file" id="editFileInput" class="input-text" accept="image/*">
 
                 <button class="btn-add" style="margin-top: 10px; background: #2563eb;" onclick="saveEdit()"><i class="fas fa-save"></i> Kaydet</button>
             </div>
@@ -137,33 +163,28 @@
     </div>
 
     <script>
-        // Senin attığın görsellere tam uyumlu başlangıç listesi
-        const defaultSliders = [
-            { id: 1, title: 'Anasayfa Hero 1', category: 'Anasayfa Slider', image_url: '../images/hero-1.jpg', is_active: true },
-            { id: 2, title: 'Anasayfa Hero 2', category: 'Anasayfa Slider', image_url: '../images/hero-2.jpg', is_active: true },
-            { id: 3, title: 'Anasayfa Hero 3', category: 'Anasayfa Slider', image_url: '../images/hero-3.jpg', is_active: true },
-            { id: 4, title: 'Anasayfa Hero 4', category: 'Anasayfa Slider', image_url: '../images/hero-4.jpg', is_active: true },
-            { id: 5, title: 'Anasayfa Hero 5', category: 'Anasayfa Slider', image_url: '../images/hero-5.jpg', is_active: true },
-            { id: 6, title: 'Hakkımızda', category: 'Hakkımızda Sayfası', image_url: '../images/about.jpg', is_active: true },
-            { id: 7, title: 'Logo', category: 'Genel', image_url: '../images/logo.jpg', is_active: true },
-            { id: 8, title: 'Vela Sapanca', category: 'Projelerimiz', image_url: '../images/vela-sapanca.jpg', is_active: true },
-            { id: 9, title: 'Ereğli Konakları', category: 'Projelerimiz', image_url: '../images/eksioglu-eregli.jpg', is_active: true },
-            { id: 10, title: 'Hizmet 1', category: 'Hizmetlerimiz', image_url: '../images/svc-1.jpg', is_active: true },
-            { id: 11, title: 'Hizmet 2', category: 'Hizmetlerimiz', image_url: '../images/svc-2.jpg', is_active: true },
-            { id: 12, title: 'Proje 1', category: 'Projelerimiz', image_url: '../images/proj-1.jpg', is_active: true }
+        let sliders = JSON.parse(localStorage.getItem('ekras_sliders')) || [
+            { id: 1, title: 'Anasayfa Banner 1', category: 'Anasayfa Slider', image_url: '../images/hero-1.jpg', is_active: true },
+            { id: 2, title: 'Anasayfa Banner 2', category: 'Anasayfa Slider', image_url: '../images/hero-2.jpg', is_active: true },
+            { id: 3, title: 'Anasayfa Banner 3', category: 'Anasayfa Slider', image_url: '../images/hero-3.jpg', is_active: true },
+            { id: 4, title: 'Hakkımızda Kapak', category: 'Hakkımızda Sayfası', image_url: '../images/about.jpg', is_active: true },
+            { id: 5, title: 'Vela Sapanca Görseli', category: 'Vela Sapanca', image_url: '../images/vela-sapanca.jpg', is_active: true },
+            { id: 6, title: 'Ereğli Konakları Görseli', category: 'Ekşioğlu Konakları (Ereğli)', image_url: '../images/eksioglu-eregli.jpg', is_active: true }
         ];
-
-        let sliders = JSON.parse(localStorage.getItem('ekras_local_images')) || defaultSliders;
 
         function renderSliders() {
             const activeContainer = document.getElementById('activeSliders');
             const passiveContainer = document.getElementById('passiveSliders');
+            const selectedCategory = document.getElementById('categoryInput').value;
             
             activeContainer.innerHTML = '';
             passiveContainer.innerHTML = '';
 
-            const activeItems = sliders.filter(item => item.is_active);
-            const passiveItems = sliders.filter(item => !item.is_active);
+            // Seçilen kategoriye göre filtreleme yapıyoruz
+            const filteredSliders = sliders.filter(item => item.category === selectedCategory);
+
+            const activeItems = filteredSliders.filter(item => item.is_active);
+            const passiveItems = filteredSliders.filter(item => !item.is_active);
 
             activeItems.forEach(item => {
                 activeContainer.innerHTML += `
@@ -203,45 +224,48 @@
                 `;
             });
 
-            if (activeContainer.innerHTML === '') activeContainer.innerHTML = '<p style="color:#64748b; font-size:13px;">Aktif görsel yok.</p>';
-            if (passiveContainer.innerHTML === '') passiveContainer.innerHTML = '<p style="color:#64748b; font-size:13px;">Pasif görsel yok.</p>';
+            if (activeContainer.innerHTML === '') activeContainer.innerHTML = '<p style="color:#64748b; font-size:13px; margin-top:10px;">Bu alanda aktif görsel bulunamadı.</p>';
+            if (passiveContainer.innerHTML === '') passiveContainer.innerHTML = '<p style="color:#64748b; font-size:13px; margin-top:10px;">Bu alanda pasif görsel bulunamadı.</p>';
         }
 
         function sliderEkle() {
+            const fileInput = document.getElementById('fileInput');
             const titleInput = document.getElementById('titleInput');
-            const imagePathInput = document.getElementById('imagePathInput');
             const categoryInput = document.getElementById('categoryInput');
 
-            if(!titleInput.value || !imagePathInput.value) {
-                return alert("Lütfen başlık ve dosya yolunu doldurun!");
+            if(!titleInput.value) return alert("Lütfen bir görsel başlığı yazın!");
+
+            let imagePath = '../images/hero-1.jpg'; 
+            if(fileInput.files && fileInput.files[0]) {
+                imagePath = '../images/' + fileInput.files[0].name;
             }
 
             const yeniGorsel = {
                 id: Date.now(),
                 title: titleInput.value,
                 category: categoryInput.value,
-                image_url: imagePathInput.value,
+                image_url: imagePath,
                 is_active: true
             };
 
             sliders.push(yeniGorsel);
-            localStorage.setItem('ekras_local_images', JSON.stringify(sliders));
+            localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
             
             titleInput.value = '';
-            imagePathInput.value = '';
+            fileInput.value = '';
             renderSliders();
         }
 
         function toggleStatus(id) {
             sliders = sliders.map(s => s.id === id ? {...s, is_active: !s.is_active} : s);
-            localStorage.setItem('ekras_local_images', JSON.stringify(sliders));
+            localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
             renderSliders();
         }
 
         function deleteSlider(id) {
             if(confirm("Bu görseli silmek istediğinize emin misiniz?")) {
                 sliders = sliders.filter(s => s.id !== id);
-                localStorage.setItem('ekras_local_images', JSON.stringify(sliders));
+                localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
                 renderSliders();
             }
         }
@@ -252,7 +276,7 @@
             document.getElementById('editId').value = item.id;
             document.getElementById('editTitle').value = item.title;
             document.getElementById('editCategory').value = item.category;
-            document.getElementById('editImagePath').value = item.image_url;
+            document.getElementById('editFileInput').value = '';
             document.getElementById('editModal').style.display = 'flex';
         }
 
@@ -264,11 +288,18 @@
             const id = Number(document.getElementById('editId').value);
             const title = document.getElementById('editTitle').value;
             const category = document.getElementById('editCategory').value;
-            const imagePath = document.getElementById('editImagePath').value;
+            const editFileInput = document.getElementById('editFileInput');
 
-            sliders = sliders.map(s => s.id === id ? {...s, title: title, category: category, image_url: imagePath} : s);
-            
-            localStorage.setItem('ekras_local_images', JSON.stringify(sliders));
+            let item = sliders.find(s => s.id === id);
+            if(item) {
+                item.title = title;
+                item.category = category;
+                if(editFileInput.files && editFileInput.files[0]) {
+                    item.image_url = '../images/' + editFileInput.files[0].name;
+                }
+            }
+
+            localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
             closeModal();
             renderSliders();
         }
