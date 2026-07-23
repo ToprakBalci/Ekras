@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ekras - Tüm Sitenin Görsel Yönetimi</title>
+    <title>Ekras - Görsel Yönetimi</title>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -46,7 +46,6 @@
         
         .location-badge { font-size: 11px; background: #e0e7ff; color: #3730a3; padding: 2px 8px; border-radius: 12px; font-weight: bold; display: inline-block; margin-top: 4px; }
 
-        /* MODAL (DÜZENLEME PENCERESİ) STİLLERİ */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 999; }
         .modal-content { background: white; padding: 25px; border-radius: 8px; width: 450px; max-width: 90%; }
         .modal-header { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; }
@@ -82,21 +81,8 @@
                 <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Yeni Görsel Ekle</h3>
                 <div class="form-row">
                     <select id="categoryInput" class="input-text">
-    <optgroup label="Genel Sayfa Alanları">
-        <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
-        <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
-        <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
-    </optgroup>
-    <optgroup label="Projelerimiz">
-        <option value="Proje 1">🏢 Proje 1</option>
-        <option value="Proje 2">🏡 Proje 2</option>
-        <option value="Proje 3">🏗️ Proje 3</option>
-        <option value="Proje 4">🏬 Proje 4</option>
-        <option value="Proje 5">🌆 Proje 5</option>
-        <option value="Proje 6">🏞️ Proje 6</option>
-        <option value="Proje 7">🏖️ Proje 7</option>
-    </optgroup>
-</select>
+                        <!-- Burası Javascript ile dinamik dolacak -->
+                    </select>
                     <input type="file" id="fileInput" class="input-text" accept="image/*">
                     <input type="text" id="titleInput" class="input-text" placeholder="Görsel Adı / Başlığı">
                     <button class="btn-add" id="btnUpload" onclick="sliderEkle()"><i class="fas fa-plus"></i> Sitemize Ekle</button>
@@ -122,7 +108,7 @@
         </div>
     </div>
 
-    <!-- DÜZENLEME / DEĞİŞTİRME MODAL PENCERESİ -->
+    <!-- MODAL PENCERESİ -->
     <div id="editModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -135,11 +121,7 @@
                 
                 <label style="font-size: 13px; font-weight: bold;">Görsel Nereye Ait?</label>
                 <select id="editCategory" class="input-text">
-                    <option value="Anasayfa Slider">Anasayfa Slider</option>
-                    <option value="Hakkımızda Sayfası">Hakkımızda Sayfası</option>
-                    <option value="Tamamlanan Projeler">Tamamlanan Projeler</option>
-                    <option value="Devam Eden Projeler">Devam Eden Projeler</option>
-                    <option value="Hizmetlerimiz">Hizmetlerimiz Görseli</option>
+                    <!-- Burası da Javascript ile dinamik dolacak -->
                 </select>
 
                 <label style="font-size: 13px; font-weight: bold;">Görsel Başlığı:</label>
@@ -161,7 +143,47 @@
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhdXJzcXNkaXBtbnRraGZ3bG9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTQ0MTAsImV4cCI6MjEwMDM5MDQxMH0.bVxwSJ-6Kn7zQnu1KXG5MTDoJocCFlrZNXQAT71VB2U";
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // 1. Görselleri Veritabanından Yükle
+        // 1. Projeleri ve Kategorileri Veritabanından Çekip Menüleri Doldur
+        async function loadCategories() {
+            const catSelect = document.getElementById('categoryInput');
+            const editCatSelect = document.getElementById('editCategory');
+
+            let optionsHTML = `
+                <optgroup label="Genel Sayfa Alanları">
+                    <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
+                    <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
+                    <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
+                </optgroup>
+            `;
+
+            try {
+                // Veritabanındaki 'projects' tablosundan tüm projeleri çek
+                const { data: projects, error } = await db.from('projects').select('*');
+
+                if (!error && projects && projects.length > 0) {
+                    optionsHTML += `<optgroup label="Projelerimiz (Siteden Çekilenler)">`;
+                    projects.forEach(p => {
+                        const projName = p.title || p.name || `Proje #${p.id}`;
+                        optionsHTML += `<option value="Proje: ${projName}">🏢 ${projName}</option>`;
+                    });
+                    optionsHTML += `</optgroup>`;
+                } else {
+                    optionsHTML += `
+                        <optgroup label="Projelerimiz">
+                            <option value="Proje 1">🏢 Proje 1</option>
+                            <option value="Proje 2">🏡 Proje 2</option>
+                        </optgroup>
+                    `;
+                }
+            } catch (err) {
+                console.error("Projeler çekilirken hata:", err);
+            }
+
+            catSelect.innerHTML = optionsHTML;
+            editCatSelect.innerHTML = optionsHTML;
+        }
+
+        // 2. Görselleri Veritabanından Yükle
         async function loadSliders() {
             const { data, error } = await db.from('sliders').select('*').order('created_at', { ascending: false });
             
@@ -178,7 +200,7 @@
                 const cardHTML = `
                     <div class="image-card ${item.is_active ? '' : 'passive'}">
                         <div class="card-info">
-                            <img src="${item.image_url}" class="img-preview" alt="Slider">
+                            <img src="${item.image_url}" class="img-preview" alt="Görsel">
                             <div>
                                 <div style="font-size:14px; font-weight:600;">${item.title || 'Başlıksız'}</div>
                                 <span class="location-badge">📍 ${categoryName}</span>
@@ -202,7 +224,7 @@
             });
         }
 
-        // 2. Yeni Görsel Ekle
+        // 3. Yeni Görsel Ekle
         async function sliderEkle() {
             const fileInput = document.getElementById('fileInput');
             const titleInput = document.getElementById('titleInput');
@@ -240,7 +262,6 @@
             loadSliders();
         }
 
-        // 3. Değiştir / Düzenle Modal Aç
         function openModal(id, title, category, imageUrl) {
             document.getElementById('editId').value = id;
             document.getElementById('editTitle').value = title;
@@ -254,7 +275,6 @@
             document.getElementById('editModal').style.display = 'none';
         }
 
-        // 4. Değişiklikleri Kaydet (Resim Değiştirme Dahil)
         async function saveEdit() {
             const id = document.getElementById('editId').value;
             const title = document.getElementById('editTitle').value;
@@ -262,7 +282,6 @@
             const fileInput = document.getElementById('editFile');
             let imageUrl = document.getElementById('editOldUrl').value;
 
-            // Eğer yeni bir resim dosyası seçildiyse yükle
             if (fileInput.files.length > 0) {
                 const file = fileInput.files[0];
                 const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
@@ -274,7 +293,6 @@
                 imageUrl = urlData.publicUrl;
             }
 
-            // Veritabanında güncelle
             await db.from('sliders').update({
                 title: title,
                 category: category,
@@ -297,7 +315,13 @@
             }
         }
 
-        loadSliders();
+        // Sayfa yüklenince hem menüleri hem görselleri çek
+        async function init() {
+            await loadCategories();
+            await loadSliders();
+        }
+
+        init();
     </script>
 </body>
 </html>
