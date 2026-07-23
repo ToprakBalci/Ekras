@@ -30,14 +30,16 @@
 
         .drag-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .panel-box { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; min-height: 300px; }
-        .panel-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; }
+        .panel-title { font-size: 18px; font-weight: bold; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        
+        /* Kategori Başlığı Tasarımı */
+        .cat-group-title { margin: 20px 0 10px 0; padding-bottom: 8px; border-bottom: 2px solid #cbd5e1; font-weight: bold; color: #334155; font-size: 15px; display: flex; align-items: center; gap: 8px; }
         
         .image-card {
             background: #ffffff; border: 1px solid #22c55e; color: #1e293b; padding: 15px; border-radius: 8px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.03);
         }
         .image-card.passive { border-color: #ef4444; }
         
-        /* Fotoğrafların tamamının görünmesi için güncellendi */
         .img-preview { width: 100%; max-height: 220px; object-fit: contain; border-radius: 6px; border: 1px solid #cbd5e1; background: #000000; }
         
         .card-top { display: flex; align-items: center; justify-content: space-between; }
@@ -135,16 +137,21 @@
                 <input type="hidden" id="editId">
                 <label style="font-size: 13px; font-weight: bold;">Kategori / Konum:</label>
                 <select id="editCategory" class="input-text">
-                    <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
-                    <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
-                    <option value="Vela Sapanca">🏢 Vela Sapanca</option>
-                    <option value="Ekşioğlu Konakları (Ereğli)">🏢 Ekşioğlu Konakları (Ereğli)</option>
-                    <option value="Ekşioğlu Konakları 4. Etap">🏢 Ekşioğlu Konakları 4. Etap</option>
-                    <option value="Ekşioğlu Konakları 3. Etap">🏢 Ekşioğlu Konakları 3. Etap</option>
-                    <option value="Ekşioğlu Konakları 2. Etap">🏢 Ekşioğlu Konakları 2. Etap</option>
-                    <option value="Ekşioğlu Konakları 1. Etap">🏢 Ekşioğlu Konakları 1. Etap</option>
-                    <option value="Ekşioğlu Life City">🏢 Ekşioğlu Life City</option>
-                    <option value="Ekşioğlu Evleri">🏢 Ekşioğlu Evleri</option>
+                    <optgroup label="Genel Sayfa Alanları">
+                        <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
+                        <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
+                        <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
+                    </optgroup>
+                    <optgroup label="Projelerimiz">
+                        <option value="Vela Sapanca">🏢 Vela Sapanca</option>
+                        <option value="Ekşioğlu Konakları (Ereğli)">🏢 Ekşioğlu Konakları (Ereğli)</option>
+                        <option value="Ekşioğlu Konakları 4. Etap">🏢 Ekşioğlu Konakları 4. Etap</option>
+                        <option value="Ekşioğlu Konakları 3. Etap">🏢 Ekşioğlu Konakları 3. Etap</option>
+                        <option value="Ekşioğlu Konakları 2. Etap">🏢 Ekşioğlu Konakları 2. Etap</option>
+                        <option value="Ekşioğlu Konakları 1. Etap">🏢 Ekşioğlu Konakları 1. Etap</option>
+                        <option value="Ekşioğlu Life City">🏢 Ekşioğlu Life City</option>
+                        <option value="Ekşioğlu Evleri">🏢 Ekşioğlu Evleri</option>
+                    </optgroup>
                 </select>
                 <label style="font-size: 13px; font-weight: bold;">Görsel Başlığı:</label>
                 <input type="text" id="editTitle" class="input-text">
@@ -167,6 +174,27 @@
             { id: 6, title: 'Ereğli Konakları Görseli', category: 'Ekşioğlu Konakları (Ereğli)', image_url: '../images/eksioglu-eregli.jpg', is_active: true }
         ];
 
+        // Kartın HTML yapısını oluşturan yardımcı fonksiyon
+        function generateCardHTML(item) {
+            return `
+                <div class="image-card ${item.is_active ? '' : 'passive'}">
+                    <img src="${item.image_url}" class="img-preview" onerror="this.src='https://via.placeholder.com/400x200?text=Resim+Bulunamadi'">
+                    <div class="card-top">
+                        <div>
+                            <div style="font-size:15px; font-weight:700;">${item.title}</div>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-action btn-edit" onclick="openModal(${item.id})"><i class="fas fa-edit"></i> Düzenle</button>
+                        <button class="btn-action" style="background:${item.is_active ? '#eab308' : '#16a34a'}" onclick="toggleStatus(${item.id})">
+                            ${item.is_active ? 'Pasif Yap' : 'Aktif Yap'}
+                        </button>
+                        <button class="btn-action btn-delete" onclick="deleteSlider(${item.id})"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                </div>
+            `;
+        }
+
         function renderSliders() {
             const activeContainer = document.getElementById('activeSliders');
             const passiveContainer = document.getElementById('passiveSliders');
@@ -174,32 +202,34 @@
             activeContainer.innerHTML = '';
             passiveContainer.innerHTML = '';
 
-            sliders.forEach(item => {
-                const cardHTML = `
-                    <div class="image-card ${item.is_active ? '' : 'passive'}">
-                        <img src="${item.image_url}" class="img-preview" onerror="this.src='https://via.placeholder.com/400x200?text=Resim+Bulunamadi'">
-                        <div class="card-top">
-                            <div>
-                                <div style="font-size:15px; font-weight:700;">${item.title}</div>
-                                <span class="location-badge">📍 ${item.category}</span>
-                            </div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn-action btn-edit" onclick="openModal(${item.id})"><i class="fas fa-edit"></i> Düzenle</button>
-                            <button class="btn-action" style="background:${item.is_active ? '#eab308' : '#16a34a'}" onclick="toggleStatus(${item.id})">
-                                ${item.is_active ? 'Pasif Yap' : 'Aktif Yap'}
-                            </button>
-                            <button class="btn-action btn-delete" onclick="deleteSlider(${item.id})"><i class="fas fa-trash"></i> Sil</button>
-                        </div>
-                    </div>
-                `;
+            // Benzersiz kategorileri bul (Anasayfa Slider, Vela Sapanca vb.)
+            const categories = [...new Set(sliders.map(item => item.category))];
 
-                if (item.is_active) {
-                    activeContainer.innerHTML += cardHTML;
-                } else {
-                    passiveContainer.innerHTML += cardHTML;
+            categories.forEach(category => {
+                // Bu kategoriye ait aktif ve pasif resimleri ayır
+                const activeItems = sliders.filter(item => item.category === category && item.is_active);
+                const passiveItems = sliders.filter(item => item.category === category && !item.is_active);
+
+                // Eğer bu kategoride aktif resim varsa, başlığını ekle ve resimleri diz
+                if (activeItems.length > 0) {
+                    activeContainer.innerHTML += `<div class="cat-group-title"><i class="fas fa-folder-open" style="color:#2563eb;"></i> ${category}</div>`;
+                    activeItems.forEach(item => {
+                        activeContainer.innerHTML += generateCardHTML(item);
+                    });
+                }
+
+                // Eğer bu kategoride pasif resim varsa, başlığını ekle ve resimleri diz
+                if (passiveItems.length > 0) {
+                    passiveContainer.innerHTML += `<div class="cat-group-title"><i class="fas fa-folder-open" style="color:#64748b;"></i> ${category}</div>`;
+                    passiveItems.forEach(item => {
+                        passiveContainer.innerHTML += generateCardHTML(item);
+                    });
                 }
             });
+
+            // Eğer hiç resim yoksa uyarı göster
+            if (activeContainer.innerHTML === '') activeContainer.innerHTML = '<p style="color:#64748b; font-size:13px; margin-top:10px;">Aktif görsel bulunamadı.</p>';
+            if (passiveContainer.innerHTML === '') passiveContainer.innerHTML = '<p style="color:#64748b; font-size:13px; margin-top:10px;">Pasif görsel bulunamadı.</p>';
         }
 
         function sliderEkle() {
@@ -222,7 +252,7 @@
                 is_active: true
             };
 
-            sliders.unshift(yeniGorsel);
+            sliders.push(yeniGorsel); // Sona ekleyelim ki listeleme düzeni bozulmasın
             localStorage.setItem('ekras_sliders', JSON.stringify(sliders));
             
             titleInput.value = '';
