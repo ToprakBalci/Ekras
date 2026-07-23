@@ -134,12 +134,9 @@
             </div>
         </div>
     </div>
-<!-- data.js dosyasını panele dahil ediyoruz -->
-<script src="../js/data.js"></script>
 
-<!-- Supabase JS Kütüphanesi -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Supabase JS Kütüphanesi -->
+    <!-- Kütüphaneler ve Data JS -->
+    <script src="../js/data.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
@@ -147,7 +144,7 @@
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhdXJzcXNkaXBtbnRraGZ3bG9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTQ0MTAsImV4cCI6MjEwMDM5MDQxMH0.bVxwSJ-6Kn7zQnu1KXG5MTDoJocCFlrZNXQAT71VB2U";
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // 1. Projeleri ve Kategorileri Veritabanından Çekip Menüleri Doldur
+        // 1. Projeleri ve Kategorileri Dinamik Olarak Menüye Doldur
         async function loadCategories() {
             const catSelect = document.getElementById('categoryInput');
             const editCatSelect = document.getElementById('editCategory');
@@ -160,28 +157,34 @@
                 </optgroup>
             `;
 
-            try {
-                // Veritabanındaki 'projects' tablosundan tüm projeleri çek
-                const { data: projects, error } = await db.from('projects').select('*');
+            optionsHTML += `<optgroup label="Projelerimiz">`;
 
-                if (!error && projects && projects.length > 0) {
-                    optionsHTML += `<optgroup label="Projelerimiz (Siteden Çekilenler)">`;
-                    projects.forEach(p => {
-                        const projName = p.title || p.name || `Proje #${p.id}`;
-                        optionsHTML += `<option value="Proje: ${projName}">🏢 ${projName}</option>`;
+            // A) data.js içindeki projeleri oku
+            if (typeof projects !== 'undefined' && Array.isArray(projects) && projects.length > 0) {
+                projects.forEach(p => {
+                    const projName = p.title || p.name;
+                    if (projName) {
+                        optionsHTML += `<option value="${projName}">🏢 ${projName}</option>`;
+                    }
+                });
+            }
+
+            // B) Supabase üzerinde 'projects' tablosu varsa oradan da çekip ekle
+            try {
+                const { data: dbProjects, error } = await db.from('projects').select('*');
+                if (!error && dbProjects && dbProjects.length > 0) {
+                    dbProjects.forEach(p => {
+                        const projName = p.title || p.name || p.baslik;
+                        if (projName) {
+                            optionsHTML += `<option value="${projName}">🏗️ ${projName}</option>`;
+                        }
                     });
-                    optionsHTML += `</optgroup>`;
-                } else {
-                    optionsHTML += `
-                        <optgroup label="Projelerimiz">
-                            <option value="Proje 1">🏢 Proje 1</option>
-                            <option value="Proje 2">🏡 Proje 2</option>
-                        </optgroup>
-                    `;
                 }
             } catch (err) {
-                console.error("Projeler çekilirken hata:", err);
+                console.log("Supabase tablo kontrolü:", err);
             }
+
+            optionsHTML += `</optgroup>`;
 
             catSelect.innerHTML = optionsHTML;
             editCatSelect.innerHTML = optionsHTML;
