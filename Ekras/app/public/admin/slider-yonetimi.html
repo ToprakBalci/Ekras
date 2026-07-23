@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekras Yapı - Slider & Animasyon Yönetimi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #f4f6f9; display: flex; flex-direction: column; height: 100vh; }
+        
+        .top-bar { background: #fff; height: 60px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+        .brand { font-size: 20px; font-weight: bold; color: #0f172a; }
+        
+        .main-container { display: flex; flex: 1; }
+        .sidebar { width: 230px; background: #0f172a; color: white; padding-top: 15px; }
+        .menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 20px; color: #94a3b8; text-decoration: none; font-size: 14px; }
+        .menu-item:hover, .menu-item.active { background: #1e293b; color: #38bdf8; }
+
+        .content { flex: 1; padding: 25px; overflow-y: auto; }
+        
+        .alert-info { background: #fff8e1; border: 1px solid #ffe082; color: #7f6000; padding: 15px; border-radius: 6px; margin-bottom: 20px; font-size: 13px; }
+        
+        /* FORM AREA */
+        .add-box { background: white; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
+        .form-row { display: flex; gap: 15px; margin-top: 10px; }
+        .input-text { flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 5px; }
+        .btn-add { background: #16a34a; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+
+        /* ACTIVE / PASSIVE GRID */
+        .drag-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .panel-box { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; min-height: 300px; }
+        .panel-title { font-size: 18px; font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; }
+        
+        .image-card {
+            background: #22c55e;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .image-card.passive { background: #ef4444; }
+        
+        .img-preview { width: 60px; height: 40px; object-fit: cover; border-radius: 4px; }
+        .card-actions { display: flex; gap: 8px; }
+        .btn-action { background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .btn-delete { background: #dc2626; }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="brand"><i class="fas fa-building"></i> Ekras Yapı Paneli</div>
+        <a href="../index.html" target="_blank" style="background:#2563eb; color:white; padding:8px 15px; text-decoration:none; border-radius:5px; font-size:13px;">Sitemi Göster</a>
+    </div>
+
+    <div class="main-container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <a href="index.html" class="menu-item"><i class="fas fa-home"></i> Özet Ekranı</a>
+            <a href="slider-yonetimi.html" class="menu-item active"><i class="fas fa-film"></i> Animasyon / Slider</a>
+            <a href="#" class="menu-item"><i class="fas fa-city"></i> Projelerimiz</a>
+            <a href="#" class="menu-item"><i class="fas fa-bars"></i> Menüler</a>
+            <a href="login.html" class="menu-item" style="color:#f87171;"><i class="fas fa-sign-out-alt"></i> Çıkış</a>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+            <div class="alert-info">
+                💡 Sitenizin animasyon slide'ına yeni resim ekleyin ya da var olanları aktif/pasif durumuna getirin. 
+            </div>
+
+            <!-- YENİ RESİM EKLEME FORMU -->
+            <div class="add-box">
+                <h3 style="font-size: 15px; color: #1e293b;">Yeni Slider / Fotoğraf Ekle</h3>
+                <div class="form-row">
+                    <input type="file" class="input-text" accept="image/*">
+                    <input type="text" class="input-text" placeholder="Görsel Başlığı (Örn: Ekras Yapı Lüks Proje)">
+                    <button class="btn-add"><i class="fas fa-plus"></i> Sitemize Ekle</button>
+                </div>
+            </div>
+
+            <!-- AKTİF VE PASİF RESİMLER -->
+            <div class="drag-container">
+                
+                <!-- AKTİF RESİMLER -->
+                <div class="panel-box">
+                    <div class="panel-title" style="color: #16a34a;">
+                        <span><i class="fas fa-check-circle"></i> Aktif Resimler</span>
+                    </div>
+
+                    <div class="image-card">
+                        <img src="https://via.placeholder.com/60x40" class="img-preview" alt="Proje 1">
+                        <span style="font-size:13px; font-weight:600;">Proje 1 - Ana Bina</span>
+                        <div class="card-actions">
+                            <button class="btn-action"><i class="fas fa-edit"></i> Düzenle</button>
+                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Sil</button>
+                        </div>
+                    </div>
+
+                    <div class="image-card">
+                        <img src="https://via.placeholder.com/60x40" class="img-preview" alt="Proje 2">
+                        <span style="font-size:13px; font-weight:600;">Villa Projesi Dış Görünüm</span>
+                        <div class="card-actions">
+                            <button class="btn-action"><i class="fas fa-edit"></i> Düzenle</button>
+                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Sil</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASİF RESİMLER -->
+                <div class="panel-box">
+                    <div class="panel-title" style="color: #dc2626;">
+                        <span><i class="fas fa-times-circle"></i> Pasif Resimler</span>
+                    </div>
+
+                    <div class="image-card passive">
+                        <img src="https://via.placeholder.com/60x40" class="img-preview" alt="Eski Proje">
+                        <span style="font-size:13px; font-weight:600;">Eski Sezon Kampanya</span>
+                        <div class="card-actions">
+                            <button class="btn-action" style="background:#16a34a;">Aktif Et</button>
+                            <button class="btn-action btn-delete"><i class="fas fa-trash"></i> Sil</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

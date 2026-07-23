@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekras Yapı A.Ş. | İnşaat ve Taahhüt</title>
+    <meta name="description" content="Ekras Yapı A.Ş. - Tecrübeli teknik kadromuz ile güvenilir ve verimli ekip olma anlayışıyla hizmet sunmaktayız.">
+    <!-- Google Fonts: Montserrat (headings) + Inter (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+/* Dropdown Menü Konumlandırma ve Kutu Düzeni */
+.nav-dropdown {
+    position: relative !important;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    background-color: #ffffff !important;
+    width: max-content !important;
+    min-width: 280px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 8px !important;
+    padding: 8px 0 !important;
+    margin: 0 !important;
+    list-style: none !important;            /* Liste noktalarını tamamen kaldırır */
+    z-index: 9999 !important;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+    display: block !important;
+}
+
+/* Liste Elemanları (li) Sıfırlama */
+.dropdown-menu li {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+/* Linklerin Düzeni ve Aralarındaki Çizgiler */
+.dropdown-menu li a {
+    display: block !important;               /* Dikey sıralama */
+    padding: 12px 20px !important;           /* Yazılar arası iç boşluk */
+    color: #2c3e50 !important;               /* Koyu şık metin rengi */
+    text-decoration: none !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid #eef0f2 !important; /* İnce ayırıcı çizgi */
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    transition: all 0.2s ease !important;
+}
+
+/* En alttaki elemanın çizgisini kaldır */
+.dropdown-menu li:last-child a {
+    border-bottom: none !important;
+}
+
+/* Hover Efekti (Üzerine Gelince) */
+.dropdown-menu li a:hover {
+    background-color: #f8f9fa !important;
+    color: #c9a84c !important;               /* Altın sarısı hover rengi */
+    padding-left: 25px !important;           /* Sağa kayma efekti */
+}
+</style>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+    <!-- ==================== HEADER / NAVIGATION ==================== -->
+    <header class="header" id="header">
+        <div class="container header-container">
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Ekras Yapı Logo" style="height: 50px; width: auto;">
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="nav-desktop">
+                <a href="#home" class="nav-link active">ANASAYFA</a>
+                <a href="#kurumsal" class="nav-link">KURUMSAL</a>
+                <div class="nav-dropdown">
+                    <a href="#projelerimiz" class="nav-link">
+                        PROJELERİMİZ
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="project-detail.html?id=eksioglu-evleri">EKŞİOĞLU EVLERİ</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-life-city">EKŞİOĞLU LİFE CİTY</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-1">EKŞİOĞLU KONAKLARI 1. ETAP</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-2">EKŞİOĞLU KONAKLARI 2. ETAP</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-3">EKŞİOĞLU KONAKLARI 3. ETAP</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-4">EKŞİOĞLU KONAKLARI 4. ETAP</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-eregli">EKŞİOĞLU KONAKLARI (EREĞLİ)</a></li>
+                        <li><a href="project-detail.html?id=vela-sapanca">VELA SAPANCA</a></li>
+                    </ul>
+                </div>
+                <div class="nav-dropdown">
+                    <a href="#hizmetlerimiz" class="nav-link">
+                        HİZMETLERİMİZ
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="service-detail.html?id=bina-aydinlatma">BİNA AYDINLATMA</a></li>
+                        <li><a href="service-detail.html?id=cam-balkon">CAM BALKON</a></li>
+                        <li><a href="service-detail.html?id=cati-sistemleri">ÇATI SİSTEMLERİ</a></li>
+                        <li><a href="service-detail.html?id=havuz-yapimi">HAVUZ YAPIMI</a></li>
+                    </ul>
+                </div>
+                <a href="#multimedya" class="nav-link">MULTİMEDYA</a>
+                <a href="#iletisim" class="nav-link">İLETİŞİM</a>
+            </nav>
+
+            <!-- Mobile Hamburger -->
+            <button class="hamburger" id="hamburger" aria-label="Menüyü Aç/Kapat">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <nav class="nav-mobile" id="nav-mobile">
+            <a href="#home" class="nav-mobile-link">ANASAYFA</a>
+            <a href="#kurumsal" class="nav-mobile-link">KURUMSAL</a>
+            <a href="#projelerimiz" class="nav-mobile-link">PROJELERİMİZ</a>
+            <a href="#hizmetlerimiz" class="nav-mobile-link">HİZMETLERİMİZ</a>
+            <a href="#multimedya" class="nav-mobile-link">MULTİMEDYA</a>
+            <a href="musteri-destek.html" class="nav-mobile-link">MÜŞTERİ DESTEK</a>
+            <a href="#iletisim" class="nav-mobile-link">İLETİŞİM</a>
+        </nav>
+    </header>
+
+    <!-- ==================== HERO SLIDER ==================== -->
+    <section class="hero" id="home">
+        <div class="slider" id="slider">
+            <div class="slide active" style="background-image: url('images/hero-1.jpg');">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="slide" style="background-image: url('images/hero-2.jpg');">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="slide" style="background-image: url('images/hero-3.jpg');">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="slide" style="background-image: url('images/hero-4.jpg');">
+                <div class="slide-overlay"></div>
+            </div>
+            <div class="slide" style="background-image: url('images/hero-5.jpg');">
+                <div class="slide-overlay"></div>
+            </div>
+        </div>
+
+        <button class="slider-arrow slider-prev" id="slider-prev" aria-label="Önceki slayt">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="slider-arrow slider-next" id="slider-next" aria-label="Sonraki slayt">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <div class="slider-dots" id="slider-dots">
+            <button class="dot active" data-slide="0" aria-label="Slayt 1"></button>
+            <button class="dot" data-slide="1" aria-label="Slayt 2"></button>
+            <button class="dot" data-slide="2" aria-label="Slayt 3"></button>
+            <button class="dot" data-slide="3" aria-label="Slayt 4"></button>
+            <button class="dot" data-slide="4" aria-label="Slayt 5"></button>
+        </div>
+    </section>
+
+    <!-- ==================== CORPORATE / ABOUT (KURUMSAL) ==================== -->
+    <section class="section about animate-on-scroll" id="kurumsal">
+        <div class="container">
+            <h2 class="section-title">KURUMSAL</h2>
+            <div class="title-underline"></div>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        Tecrübeli teknik kadromuz ile güvenilir ve verimli ekip olma anlayışıyla; 
+                        müşteri memnuniyeti ve kalite ile birlikte zamindalık ilkelerinden ödün 
+                        vermeden ülke ve dünya standartlarına uygun olarak hizmet sunmaktayız.
+                    </p>
+                    <p>
+                        Ekras Yapı A.Ş. olarak, inşaat sektöründe yenilikçi çözümler üreten, 
+                        modern mimari anlayışı ve kaliteli malzeme kullanımıyla projeler hayata 
+                        geçiren bir yapı şirketiyiz. Kurulduğumuz günden bu yana sayısız 
+                        başarılı projeye imza attık ve müşterilerimizin güvenini kazandık.
+                    </p>
+                    <p>
+                        Misyonumuz, yaşanabilir, sürdürülebilir ve estetik yapılar inşa ederek 
+                        topluma değer katmaktır. Vizyonumuz ise sektörün öncü ve yenilikçi 
+                        firmaları arasında yer almaktır.
+                    </p>
+                </div>
+                <div class="about-image">
+                    <img src="images/about.jpg" alt="Ekras Yapı A.Ş. İnşaat Projesi">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROJECTS PORTFOLIO (PROJELERİMİZ) ==================== -->
+    <section class="section projects animate-on-scroll" id="projelerimiz">
+        <div class="container">
+            <h2 class="section-title">PROJELERİMİZ</h2>
+            <p class="section-subtitle">Hayallerinizi inşa ediyoruz</p>
+            <div class="title-underline"></div>
+
+            <div class="projects-grid" id="projects-grid">
+                <!-- Dynamic Projects -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== SERVICES (HİZMETLERİMİZ - EKLENEN BÖLÜM) ==================== -->
+    <section class="section services animate-on-scroll" id="hizmetlerimiz">
+        <div class="container">
+            <h2 class="section-title">HİZMETLERİMİZ</h2>
+            <div class="title-underline"></div>
+
+            <div class="services-grid">
+                <!-- Service 1: Building Lighting -->
+                <a href="service-detail.html?id=bina-aydinlatma" style="text-decoration: none; color: inherit;">
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="images/svc-1.jpg" alt="Bina Aydınlatma">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">BİNA AYDINLATMA</h3>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Service 2: Glass Balcony -->
+                <a href="service-detail.html?id=cam-balkon" style="text-decoration: none; color: inherit;">
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="images/svc-2.jpg" alt="Cam Balkon">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">CAM BALKON</h3>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Service 3: Roof Systems -->
+                <a href="service-detail.html?id=cati-sistemleri" style="text-decoration: none; color: inherit;">
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="images/svc-3.jpg" alt="Çatı Sistemleri">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">ÇATI SİSTEMLERİ</h3>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Service 4: Pool Construction -->
+                <a href="service-detail.html?id=havuz-yapimi" style="text-decoration: none; color: inherit;">
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src="images/svc-4.jpg" alt="Havuz Yapımı">
+                        </div>
+                        <div class="service-content">
+                            <h3 class="service-title">HAVUZ YAPIMI</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MULTIMEDIA GALLERY ==================== -->
+    <section class="section multimedia animate-on-scroll" id="multimedya">
+        <div class="container">
+            <h2 class="section-title">MULTİMEDYA</h2>
+            <p class="section-subtitle">Projelerimizden kareler</p>
+            <div class="title-underline"></div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item large">
+                    <img src="images/hero-1.jpg" alt="Lüks Villa Projesi">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/hero-2.jpg" alt="Modern Apartman">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/hero-3.jpg" alt="Villa Kompleksi">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/proj-4.jpg" alt="Konut Projesi">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/proj-5.jpg" alt="Modern Rezidans">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTACT (İLETİŞİM) ==================== -->
+    <section class="contact-section" id="iletisim">
+        <div class="contact-form-bar">
+            <div class="container">
+                <form class="contact-form" id="contact-form">
+                    <input type="text" name="name" placeholder="Ad Soyad *" required class="form-input">
+                    <input type="tel" name="phone" placeholder="Telefon *" required class="form-input">
+                    <input type="email" name="email" placeholder="Email *" required class="form-input">
+                    <label class="form-consent">
+                        <input type="checkbox" name="consent" required>
+                        <span>SMS, e-posta ve telefon yoluyla elektronik ileti gönderilmesine onay veriyorum.</span>
+                    </label>
+                    <button type="submit" class="form-submit">GÖNDER</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="map" class="map"></div>
+        </div>
+
+        <div class="contact-info-section">
+            <div class="container">
+                <div class="contact-info-grid">
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h4>GENEL MERKEZ</h4>
+                        <p>Fatih mahallesi Hacı Mahmut caddesi no:153<br>Başiskele / Kocaeli</p>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h4>TELEFON</h4>
+                        <p>0 262 502 82 00</p>
+                        <p class="sub-text">Muhasebe &amp; Satın Alma: 0 262 642 00 53</p>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4>E-POSTA</h4>
+                        <p>info@ekrasyapi.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Hakkımızda</h4>
+                    <p>
+                        Tecrübeli teknik kadromuz ile güvenilir ve verimli ekip olma 
+                        anlayışıyla; müşteri memnuniyeti ve kalite ile birlikte zamindalık 
+                        ilkelerinden ödün vermeden ülke ve dünya standartlarına uygun olarak 
+                        hizmet sunmaktayız.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Sayfalar</h4>
+                    <ul class="footer-links">
+                        <li><a href="#kurumsal">Kurumsal</a></li>
+                        <li><a href="#projelerimiz">Projelerimiz</a></li>
+                        <li><a href="#hizmetlerimiz">Hizmetlerimiz</a></li>
+                        <li><a href="#multimedya">Haberler</a></li>
+                        <li><a href="#iletisim">İletişim</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Projelerimiz</h4>
+                    <ul class="footer-links">
+                        <li><a href="project-detail.html?id=eksioglu-evleri">Ekşioğlu Metsan Evleri</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-life-city">Ekşioğlu Life City</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-1">Ekşioğlu Konakları 1. Etap</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-2">Ekşioğlu Konakları 2. Etap</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-3">Ekşioğlu Konakları 3. Etap</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-4">Ekşioğlu Konakları 4. Etap</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-eregli">Ekşioğlu Konakları (Ereğli)</a></li>
+                        <li><a href="project-detail.html?id=vela-sapanca">Vela Sapanca</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <div class="footer-contact">
+                        <p>
+                            <strong>Genel Merkez Adres:</strong><br>
+                            Fatih mahallesi Hacı Mahmut caddesi no:153<br>
+                            Başiskele / Kocaeli
+                        </p>
+                        <p>
+                            <strong>Gebze Şube Adres:</strong><br>
+                            Emek Mah. Ragıp Demirkol Blv. No:135/3<br>
+                            Çayırova / Kocaeli
+                        </p>
+                        <p>
+                            <strong>Ekras Yapı A.Ş.</strong><br>
+                            Muhasebe &amp; Satın Alma: 0 262 642 00 53<br>
+                            Proje Satış: 0262 502 82 00<br>
+                            E-Mail: info@ekrasyapi.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Icons -->
+            <div class="social-media">
+                <a href="#" class="social-icon facebook" aria-label="Facebook" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon twitter" aria-label="Twitter" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon instagram" aria-label="Instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== BACK TO TOP BUTTON ==================== -->
+    <button class="back-to-top" id="back-to-top" aria-label="Yukarı çık">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

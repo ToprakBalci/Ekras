@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetim Paneli Girişi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background: url('https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=1920') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            max-width: 420px;
+            padding: 35px 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .login-header {
+            color: #2ecc71;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .info-box {
+            background-color: #fcf8e3;
+            border: 1px solid #faebcc;
+            color: #8a6d3b;
+            padding: 12px;
+            font-size: 13px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .form-group { margin-bottom: 15px; }
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #dce4ec;
+            border-radius: 5px;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .form-control:focus { border-color: #3498db; }
+        .btn-login {
+            width: 100%;
+            background-color: #2b7cf6;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-login:hover { background-color: #1a66df; }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div class="login-header">
+        <i class="fas fa-user"></i> Giriş
+    </div>
+    
+    <div class="info-box">
+        Kullanıcı adınızı ve şifrenizi giriniz.
+    </div>
+
+    <form action="index.html" method="GET">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Kullanıcı Adı" required>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Şifre" required>
+        </div>
+        <button type="submit" class="btn-login">Giriş</button>
+    </form>
+</div>
+
+</body>
+</html>

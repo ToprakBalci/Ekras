@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proje Detayı | Ekras Yapı A.Ş.</title>
+    <meta name="description" content="Ekras Yapı A.Ş. proje detay sayfası.">
+    <!-- Google Fonts: Montserrat (headings) + Inter (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+    <!-- ==================== HEADER / NAVIGATION ==================== -->
+    <header class="header scrolled" id="header">
+        <div class="container header-container">
+            <a href="index.html#home" class="logo">
+                <svg class="logo-svg" viewBox="0 0 200 70" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 15 L30 5 L40 15 L50 5 L60 15 L70 5 L80 15 L90 5 L100 15 L110 5 L120 15 L130 5 L140 15 L150 5 L160 15 L170 5 L180 15" 
+                          fill="none" stroke="#c9a84c" stroke-width="2"/>
+                    <rect x="35" y="20" width="12" height="35" fill="#1a1a2e"/>
+                    <rect x="52" y="15" width="12" height="40" fill="#1a1a2e"/>
+                    <rect x="69" y="22" width="12" height="33" fill="#1a1a2e"/>
+                    <rect x="86" y="18" width="12" height="37" fill="#1a1a2e"/>
+                    <rect x="103" y="25" width="12" height="30" fill="#1a1a2e"/>
+                    <rect x="120" y="20" width="12" height="35" fill="#1a1a2e"/>
+                    <rect x="137" y="28" width="12" height="27" fill="#1a1a2e"/>
+                    <rect x="30" y="55" width="140" height="3" fill="#c9a84c"/>
+                    <text x="100" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#c9a84c">EKRAS</text>
+                    <text x="100" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#c9a84c">YAPI A.Ş.</text>
+                </svg>
+            </a>
+
+            <nav class="nav-desktop">
+                <a href="index.html#home" class="nav-link">ANASAYFA</a>
+                <a href="index.html#kurumsal" class="nav-link">KURUMSAL</a>
+                <div class="nav-dropdown">
+                    <a href="index.html#projelerimiz" class="nav-link active">
+                        PROJELERİMİZ
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="project-detail.html?id=eksioglu-metsan" class="dropdown-item">Ekşioğlu Metsan Evleri</a>
+                        <a href="project-detail.html?id=eksioglu-life-city" class="dropdown-item">Ekşioğlu Life City</a>
+                        <a href="project-detail.html?id=eksioglu-konaklari-1" class="dropdown-item">Ekşioğlu Konakları 1. Etap</a>
+                        <a href="project-detail.html?id=eksioglu-konaklari-2" class="dropdown-item">Ekşioğlu Konakları 2. Etap</a>
+                        <a href="project-detail.html?id=eksioglu-konaklari-3" class="dropdown-item">Ekşioğlu Konakları 3. Etap</a>
+                        <a href="project-detail.html?id=eksioglu-konaklari-4" class="dropdown-item">Ekşioğlu Konakları 4. Etap</a>
+                    </div>
+                </div>
+                <a href="index.html#multimedya" class="nav-link">MULTİMEDYA</a>
+                <a href="index.html#iletisim" class="nav-link">İLETİŞİM</a>
+            </nav>
+
+            <button class="hamburger" id="hamburger" aria-label="Menüyü Aç/Kapat">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <nav class="nav-mobile" id="nav-mobile">
+            <a href="index.html#home" class="nav-mobile-link">ANASAYFA</a>
+            <a href="index.html#kurumsal" class="nav-mobile-link">KURUMSAL</a>
+            <a href="index.html#projelerimiz" class="nav-mobile-link">PROJELERİMİZ</a>
+            <a href="index.html#multimedya" class="nav-mobile-link">MULTİMEDYA</a>
+            <a href="index.html#iletisim" class="nav-mobile-link">İLETİŞİM</a>
+        </nav>
+    </header>
+
+    <!-- ==================== PAGE HEADER / BREADCRUMB ==================== -->
+    <section class="page-header">
+        <div class="page-header-overlay"></div>
+        <div class="container page-header-content">
+            <h1 id="detail-title">Proje Detayı</h1>
+            <nav class="breadcrumb">
+                <a href="index.html#home"><i class="fas fa-home"></i> Anasayfa</a>
+                <span>/</span>
+                <a href="index.html#projelerimiz">Projelerimiz</a>
+                <span>/</span>
+                <span id="detail-breadcrumb-title" class="breadcrumb-current">Proje</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- ==================== PROJECT DETAIL CONTENT ==================== -->
+    <main class="detail-section">
+        <div class="container detail-container">
+
+            <!-- Project Hero Image -->
+            <div class="detail-hero-image-wrapper">
+                <img id="detail-hero-image" src="" alt="Proje Görseli" loading="eager">
+                <div class="detail-location-badge" id="detail-location">
+                    <i class="fas fa-map-marker-alt"></i> Konum
+                </div>
+            </div>
+
+            <!-- Two-column layout: Description + Specs -->
+            <div class="detail-body">
+                <!-- Left: Description -->
+                <div class="detail-description-col">
+                    <h2 class="detail-section-heading">Proje Hakkında</h2>
+                    <p id="detail-description" class="detail-description-text">
+                        Yükleniyor...
+                    </p>
+                </div>
+
+                <!-- Right: Specs Table -->
+                <div class="detail-specs-col">
+                    <h2 class="detail-section-heading">Proje Özellikleri</h2>
+                    <div class="detail-specs-table-wrapper">
+                        <table class="detail-specs-table">
+                            <tbody id="detail-specs-body">
+                                <!-- Populated by detail.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery -->
+            <div class="detail-gallery-section">
+                <h2 class="detail-section-heading">Proje Görselleri</h2>
+                <div class="detail-gallery" id="detail-gallery">
+                    <!-- Populated by detail.js -->
+                </div>
+            </div>
+
+            <!-- Back to projects CTA -->
+            <div class="detail-back-cta">
+                <a href="index.html#projelerimiz" class="btn-primary">
+                    <i class="fas fa-arrow-left"></i> Tüm Projelerimize Dön
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Hakkımızda</h4>
+                    <p>
+                        Tecrübeli teknik kadromuz ile güvenilir ve verimli ekip olma 
+                        anlayışıyla; müşteri memnuniyeti ve kalite ile birlikte zamindalık 
+                        ilkelerinden ödün vermeden ülke ve dünya standartlarına uygun olarak 
+                        hizmet sunmaktayız.
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>Sayfalar</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#kurumsal">Kurumsal</a></li>
+                        <li><a href="index.html#projelerimiz">Projelerimiz</a></li>
+                        <li><a href="index.html#multimedya">Haberler</a></li>
+                        <li><a href="index.html#iletisim">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Projelerimiz</h4>
+                    <ul class="footer-links">
+                        <li><a href="project-detail.html?id=eksioglu-metsan">Ekşioğlu Metsan Evleri</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-life-city">Ekşioğlu Life City</a></li>
+                        <li><a href="project-detail.html?id=eksioglu-konaklari-1">Ekşioğlu Konakları 1. Etap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>İletişim</h4>
+                    <div class="footer-contact">
+                        <p>
+                            <strong>Genel Merkez Adres:</strong><br>
+                            Fatih mahallesi Hacı Mahmut caddesi no:153<br>
+                            Başiskele / Kocaeli
+                        </p>
+                        <p>
+                            <strong>Ekras Yapı A.Ş.</strong><br>
+                            Muhasebe &amp; Satın Alma: 0 262 642 00 53<br>
+                            Proje Satış: 0262 502 82 00<br>
+                            E-Mail: info@ekrasyapi.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="social-media">
+                <a href="#" class="social-icon facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon twitter" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+                <a href="#" class="social-icon instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Copyright -->
+    <div class="copyright">
+        <div class="container copyright-container">
+            <p>Copyright (c) 2025 Web Sitesi - Tüm Hakları Saklıdır.</p>
+            <p>Bu site, <span class="highlight">Bilgi Kurumsal</span> <span class="highlight">Web Tasarım</span> Yazılımları ile hazırlanmıştır.</p>
+        </div>
+    </div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top" aria-label="Yukarı çık">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <!-- data.js MUST load first (provides the projects array) -->
+    <script src="js/data.js"></script>
+    <!-- detail.js uses the projects array -->
+    <script src="js/detail.js"></script>
+    <!-- Shared UI script (hamburger, back-to-top) -->
+    <script src="js/script.js"></script>
+</body>
+</html>

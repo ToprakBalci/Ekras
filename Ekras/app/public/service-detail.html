@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hizmet Detayı | Ekras Yapı A.Ş.</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .service-detail-section {
+            padding: 120px 20px 60px 20px;
+            min-height: 70vh;
+        }
+        .service-detail-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .service-detail-img {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .service-detail-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .service-detail-desc {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 30px;
+        }
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background-color: #c9a84c;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .back-btn:hover {
+            background-color: #b08f38;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="header" id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.jpg" alt="Ekras Yapı Logo" style="height: 50px; width: auto;">
+            </a>
+            <nav class="nav-desktop">
+                <a href="index.html#home" class="nav-link">ANASAYFA</a>
+                <a href="index.html#kurumsal" class="nav-link">KURUMSAL</a>
+                <a href="index.html#projelerimiz" class="nav-link">PROJELERİMİZ</a>
+                <a href="index.html#hizmetlerimiz" class="nav-link active">HİZMETLERİMİZ</a>
+                <a href="index.html#multimedya" class="nav-link">MULTİMEDYA</a>
+                <a href="index.html#iletisim" class="nav-link">İLETİŞİM</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- SERVICE DETAIL CONTENT -->
+    <main class="service-detail-section">
+        <div class="container service-detail-container">
+            <a href="index.html#hizmetlerimiz" class="back-btn" style="margin-bottom: 20px;">
+                <i class="fas fa-arrow-left"></i> Hizmetlere Dön
+            </a>
+            
+            <img id="service-img" src="" alt="Hizmet Görseli" class="service-detail-img">
+            <h1 id="service-title" class="service-detail-title">Yükleniyor...</h1>
+            <div id="service-desc" class="service-detail-desc">
+                <!-- İçerik JavaScript ile dolacak -->
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="container" style="text-align: center; color: #fff; padding: 20px 0;">
+            <p>&copy; Ekras Yapı A.Ş. Tüm Hakları Saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FOR DYNAMIC DATA -->
+    <script>
+        // Hizmet Verileri
+        const servicesData = {
+            "bina-aydinlatma": {
+                title: "BİNA AYDINLATMA",
+                image: "images/svc-1.jpg",
+                description: "Ekras Yapı olarak mimari projelerimizde estetik ve enerji verimliliğini bir arada sunan bina aydınlatma çözümleri geliştiriyoruz. Dış cephe aydınlatmalarından iç mekan konsept ışıklandırmalarına kadar profesyonel mühendislik altyapısı ile kaliteli sistemler kuruyoruz."
+            },
+            "cam-balkon": {
+                title: "CAM BALKON",
+                image: "images/svc-2.jpg",
+                description: "Dört mevsim konfor sağlayan, ısı ve ses yalıtımlı modern cam balkon sistemleri sunuyoruz. Katlanır ve sürgülü cam çözümlerimiz ile yaşam alanlarınızı genişletiyor, estetik ve güvenliği birleştiriyoruz."
+            },
+            "cati-sistemleri": {
+                title: "ÇATI SİSTEMLERİ",
+                image: "images/svc-3.jpg",
+                description: "Yapıların uzun ömürlü olmasını sağlayan en kritik unsur dayanıklı çatılardır. Su izolasyonu, ısı yalıtımı ve modern çatı kaplama malzemelerimiz ile projelerinize maksimum koruma sağlıyoruz."
+            },
+            "havuz-yapimi": {
+                title: "HAVUZ YAPIMI",
+                image: "images/svc-4.jpg",
+                description: "Müstakil villalar ve site projeleri için özel tasarım yüzme havuzu imalatı, filtrasyon sistemleri kurulumu ve peyzaj entegrasyonu hizmetleri sunuyoruz."
+            }
+        };
+
+        // URL'den ?id= parametresini al
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceId = urlParams.get('id');
+
+        // İçeriği güncelle
+        if (serviceId && servicesData[serviceId]) {
+            const data = servicesData[serviceId];
+            document.getElementById('service-title').innerText = data.title;
+            document.getElementById('service-img').src = data.image;
+            document.getElementById('service-desc').innerText = data.description;
+            document.title = `${data.title} | Ekras Yapı A.Ş.`;
+        } else {
+            document.getElementById('service-title').innerText = "Hizmet Bulunamadı";
+            document.getElementById('service-desc').innerText = "Lütfen geçerli bir hizmet seçiniz.";
+            document.getElementById('service-img').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
