@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ekras - Görsel Yönetimi</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -63,36 +62,28 @@
 
     <div class="main-container">
         <div class="sidebar">
-            <a href="/admin/index.html" class="menu-item"><i class="fas fa-home"></i> Anasayfa</a>
-            <a href="/admin/slider-yonetimi.html" class="menu-item active"><i class="fas fa-images"></i> Görsel Yönetimi</a>
-            <a href="/admin/projeler.html" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
-            <a href="/admin/hizmetler.html" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
-            <a href="/admin/sayfalar.html" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
-            <a href="/admin/ayarlar.html" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
+            <a href="index.html" class="menu-item"><i class="fas fa-home"></i> Anasayfa</a>
+            <a href="slider-yonetimi.html" class="menu-item active"><i class="fas fa-images"></i> Görsel Yönetimi</a>
+            <a href="projeler.html" class="menu-item"><i class="fas fa-project-diagram"></i> Projelerimiz</a>
+            <a href="hizmetler.html" class="menu-item"><i class="fas fa-concierge-bell"></i> Hizmetler</a>
+            <a href="sayfalar.html" class="menu-item"><i class="fas fa-file-alt"></i> Sayfalar</a>
+            <a href="ayarlar.html" class="menu-item"><i class="fas fa-cog"></i> Genel Ayarlar</a>
             <a href="#" class="menu-item" style="color: #dc2626; margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
         </div>
 
         <div class="content">
             <div class="alert-info">
-                💡 Projenizin <b>images/</b> klasöründeki görseller listelenmektedir. Admin panelinden yaptığınız değişiklikler ana sitenize anında yansır.
+                💡 <b>images/</b> klasöründeki görselleriniz listelenmektedir. Yaptığınız değişiklikler anında kaydedilir.
             </div>
 
-            <!-- YENİ GÖRSEL EKLEME ALANI -->
             <div class="add-box">
                 <h3 style="font-size: 15px; color: #1e293b; margin-bottom: 10px;">Yeni Görsel Ekle</h3>
                 <div class="form-row">
                     <select id="categoryInput" class="input-text">
-                        <optgroup label="Genel Sayfa Alanları">
-                            <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
-                            <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
-                            <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
-                        </optgroup>
-                        <optgroup label="Projelerimiz">
-                            <option value="Vela Sapanca">🏢 Vela Sapanca</option>
-                            <option value="Ekşioğlu Konakları (Ereğli)">🏢 Ekşioğlu Konakları (Ereğli)</option>
-                            <option value="Ekşioğlu Life City">🏢 Ekşioğlu Life City</option>
-                            <option value="Ekşioğlu Evleri">🏢 Ekşioğlu Evleri</option>
-                        </optgroup>
+                        <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
+                        <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
+                        <option value="Hizmetlerimiz">📍 Hizmetlerimiz</option>
+                        <option value="Projelerimiz">🏢 Projelerimiz</option>
                     </select>
                     <input type="text" id="imagePathInput" class="input-text" placeholder="Dosya Yolu (örn: ../images/hero-1.jpg)">
                     <input type="text" id="titleInput" class="input-text" placeholder="Görsel Başlığı">
@@ -100,7 +91,6 @@
                 </div>
             </div>
 
-            <!-- LİSTELEME ALANI -->
             <div class="drag-container">
                 <div class="panel-box">
                     <div class="panel-title" style="color: #16a34a;">
@@ -132,16 +122,13 @@
                 <select id="editCategory" class="input-text">
                     <option value="Anasayfa Slider">📍 Anasayfa Slider</option>
                     <option value="Hakkımızda Sayfası">📍 Hakkımızda Sayfası</option>
-                    <option value="Hizmetlerimiz">📍 Hizmetlerimiz Görseli</option>
-                    <option value="Vela Sapanca">🏢 Vela Sapanca</option>
-                    <option value="Ekşioğlu Konakları (Ereğli)">🏢 Ekşioğlu Konakları (Ereğli)</option>
-                    <option value="Ekşioğlu Life City">🏢 Ekşioğlu Life City</option>
-                    <option value="Ekşioğlu Evleri">🏢 Ekşioğlu Evleri</option>
+                    <option value="Hizmetlerimiz">📍 Hizmetlerimiz</option>
+                    <option value="Projelerimiz">🏢 Projelerimiz</option>
                 </select>
                 <label style="font-size: 13px; font-weight: bold;">Görsel Başlığı:</label>
                 <input type="text" id="editTitle" class="input-text">
                 
-                <label style="font-size: 13px; font-weight: bold;">Dosya Yolu (örn: ../images/hero-1.jpg):</label>
+                <label style="font-size: 13px; font-weight: bold;">Dosya Yolu:</label>
                 <input type="text" id="editImagePath" class="input-text">
 
                 <button class="btn-add" style="margin-top: 10px; background: #2563eb;" onclick="saveEdit()"><i class="fas fa-save"></i> Kaydet</button>
@@ -150,17 +137,20 @@
     </div>
 
     <script>
-        // Projendeki images klasöründeki gerçek dosya adlarıyla eşleşen başlangıç listesi
-        let defaultSliders = [
-            { id: 1, title: 'Anasayfa Banner 1', category: 'Anasayfa Slider', image_url: '../images/hero-1.jpg', is_active: true },
-            { id: 2, title: 'Anasayfa Banner 2', category: 'Anasayfa Slider', image_url: '../images/hero-2.jpg', is_active: true },
-            { id: 3, title: 'Anasayfa Banner 3', category: 'Anasayfa Slider', image_url: '../images/hero-3.jpg', is_active: true },
-            { id: 4, title: 'Hakkımızda Görseli', category: 'Hakkımızda Sayfası', image_url: '../images/about.jpg', is_active: true },
-            { id: 5, title: 'Hizmet Görseli 1', category: 'Hizmetlerimiz', image_url: '../images/svc-1.jpg', is_active: true },
-            { id: 6, title: 'Vela Sapanca Proje', category: 'Vela Sapanca', image_url: '../images/vela-sapanca.jpg', is_active: true },
-            { id: 7, title: 'Ereğli Konakları', category: 'Ekşioğlu Konakları (Ereğli)', image_url: '../images/eksioglu-eregli.jpg', is_active: true },
-            { id: 8, title: 'Proje Görseli 1', category: 'Ekşioğlu Life City', image_url: '../images/proj-1.jpg', is_active: true },
-            { id: 9, title: 'Proje Görseli 2', category: 'Ekşioğlu Evleri', image_url: '../images/proj-2.jpg', is_active: true }
+        // Senin attığın görsellere tam uyumlu başlangıç listesi
+        const defaultSliders = [
+            { id: 1, title: 'Anasayfa Hero 1', category: 'Anasayfa Slider', image_url: '../images/hero-1.jpg', is_active: true },
+            { id: 2, title: 'Anasayfa Hero 2', category: 'Anasayfa Slider', image_url: '../images/hero-2.jpg', is_active: true },
+            { id: 3, title: 'Anasayfa Hero 3', category: 'Anasayfa Slider', image_url: '../images/hero-3.jpg', is_active: true },
+            { id: 4, title: 'Anasayfa Hero 4', category: 'Anasayfa Slider', image_url: '../images/hero-4.jpg', is_active: true },
+            { id: 5, title: 'Anasayfa Hero 5', category: 'Anasayfa Slider', image_url: '../images/hero-5.jpg', is_active: true },
+            { id: 6, title: 'Hakkımızda', category: 'Hakkımızda Sayfası', image_url: '../images/about.jpg', is_active: true },
+            { id: 7, title: 'Logo', category: 'Genel', image_url: '../images/logo.jpg', is_active: true },
+            { id: 8, title: 'Vela Sapanca', category: 'Projelerimiz', image_url: '../images/vela-sapanca.jpg', is_active: true },
+            { id: 9, title: 'Ereğli Konakları', category: 'Projelerimiz', image_url: '../images/eksioglu-eregli.jpg', is_active: true },
+            { id: 10, title: 'Hizmet 1', category: 'Hizmetlerimiz', image_url: '../images/svc-1.jpg', is_active: true },
+            { id: 11, title: 'Hizmet 2', category: 'Hizmetlerimiz', image_url: '../images/svc-2.jpg', is_active: true },
+            { id: 12, title: 'Proje 1', category: 'Projelerimiz', image_url: '../images/proj-1.jpg', is_active: true }
         ];
 
         let sliders = JSON.parse(localStorage.getItem('ekras_local_images')) || defaultSliders;
