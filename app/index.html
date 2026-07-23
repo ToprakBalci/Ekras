@@ -463,5 +463,37 @@
     <script src="js/data.js"></script>
     <script src="js/projects.js"></script>
     <script src="js/script.js"></script>
+
+    <!-- Supabase Bağlantısı ve Dinamik Resim Çekme -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const SUPABASE_URL = "https://waursqsdipmntkhfwlom.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhdXJzcXNkaXBtbnRraGZ3bG9tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4MTQ0MTAsImV4cCI6MjEwMDM5MDQxMH0.bVxwSJ-6Kn7zQnu1KXG5MTDoJocCFlrZNXQAT71VB2U";
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function yukleSliderGorselleri() {
+        // Sadece Anasayfa Slider kategorisinde ve AKTİF olan resimleri al
+        const { data, error } = await db.from('sliders')
+            .select('*')
+            .eq('category', 'Anasayfa Slider')
+            .eq('is_active', true);
+
+        if (data && data.length > 0) {
+            // Sitedeki slider resimlerinin olduğu kapsayıcıyı seç (Örn: #slider-wrapper veya .slider)
+            const sliderArea = document.querySelector('.slider-container') || document.querySelector('#slider');
+            
+            if (sliderArea) {
+                sliderArea.innerHTML = data.map(item => `
+                    <div class="slide">
+                        <img src="${item.image_url}" alt="${item.title}">
+                    </div>
+                `).join('');
+            }
+        }
+    }
+
+    yukleSliderGorselleri();
+    
+</script>
 </body>
 </html>
